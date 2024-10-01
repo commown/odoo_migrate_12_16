@@ -1,0 +1,94 @@
+project_name: commown-12-16
+
+
+postgres_image_name: postgres:11
+postgres_container_name: commown-12-16-container-postgres-11
+postgres_volume_name: commown-12-16-volume-postgres-11
+postgres_extra_settings:
+
+
+odoo_rpc_timeout: 3600
+odoo_host_xmlrpc_port: 9069
+odoo_default_company:
+  country_code: FR
+
+
+odoo_versions:
+  - 12.0
+  - 13.0
+  - 14.0
+  - 15.0
+  - 16.0
+
+
+odoo_version_settings:
+  12.0:
+  13.0:
+  14.0:
+  15.0:
+  16.0:
+
+
+migration_steps:
+  - name: 1
+    version: 12.0
+    execution_context: regular
+    complete_name: step_01__regular__12.0
+
+  - name: 2
+    version: 13.0
+    execution_context: openupgrade
+    complete_name: step_02__openupgrade__13.0
+
+  - name: 3
+    version: 14.0
+    execution_context: openupgrade
+    complete_name: step_03__openupgrade__14.0
+
+  - name: 4
+    version: 15.0
+    execution_context: openupgrade
+    complete_name: step_04__openupgrade__15.0
+
+  - name: 5
+    version: 16.0
+    execution_context: openupgrade
+    complete_name: step_05__openupgrade__16.0
+
+  - name: 6
+    version: 16.0
+    execution_context: regular
+    complete_name: step_06__regular__16.0
+
+
+workload_settings:
+
+  # Ignored module list
+  ignored_module_list: []
+
+  # porting a module requires 45 minutes minimaly
+  port_minimal_time: 45
+
+  # a migration cost more for each version
+  port_per_version: 15
+
+  # Porting 120 lines of Python code costs 1 hour
+  port_per_python_line_time: 0.5
+
+  # Porting 120 lines of Javascript code costs 1 hour
+  port_per_javascript_line_time: 0.5
+
+  # Porting 10 lines of XML costs 1 minute
+  port_per_xml_line_time: 0.10
+
+  # Minimal time for Openupgrade PR
+  open_upgrade_minimal_time: 10
+
+  # time for a line of model in the openupgrade_analysis.txt
+  openupgrade_model_line_time: 10
+
+  # Time for a line of field in the openupgrade_analysis.txt
+  openupgrade_field_line_time: 5
+
+  # Time for a line of XML in the openupgrade_analysis.txt
+  openupgrade_xml_line_time: 0.1

@@ -1,0 +1,282 @@
+##############################################################################
+## Odoo Repository
+##############################################################################
+
+./src/odoo:
+    defaults:
+        depth: 1
+    remotes:
+        odoo: https://github.com/odoo/odoo
+    target: odoo 15.0-target
+    merges:
+        - odoo 15.0
+
+##############################################################################
+## OpenUpgrade Repository
+##############################################################################
+
+./src/openupgrade:
+    defaults:
+        depth: 1
+    remotes:
+        OCA: https://github.com/OCA/OpenUpgrade
+    target: OCA 15.0-target
+    merges:
+        - OCA 15.0
+
+##############################################################################
+## OCA
+##############################################################################
+
+./src/account-budgeting:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/account-budgeting
+  target: OCA 15.0-current
+  merges:
+    - OCA 15.0
+
+./src/account-financial-reporting:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/account-financial-reporting
+  target: OCA 15.0-current
+  merges:
+    - OCA 15.0
+
+./src/account-financial-tools:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/account-financial-tools
+  target: OCA 15.0-current
+  merges:
+    - OCA 15.0
+
+./src/account-invoicing:
+  remotes:
+    OCA: https://github.com/OCA/account-invoicing
+  target: OCA 15.0-current
+  merges:
+    - OCA 15.0
+
+./src/account-payment:
+  remotes:
+    OCA: https://github.com/OCA/account-payment
+  target: OCA 15.0-current
+  merges:
+    - OCA 15.0
+
+./src/account-reconcile:
+  remotes:
+    OCA: https://github.com/OCA/account-reconcile
+  target: OCA 15.0-current
+  merges:
+    - OCA 15.0
+
+./src/bank-payment:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/bank-payment
+  target: OCA 15.0-current
+  merges:
+    - OCA 15.0
+
+./src/bank-statement-import:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/bank-statement-import
+  target: OCA 15.0-current
+  merges:
+    - OCA 15.0
+
+./src/connector-telephony:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/connector-telephony
+  target: OCA 15.0-current
+  merges:
+    - OCA 15.0
+
+./src/contract:
+  remotes:
+    OCA: https://github.com/OCA/contract
+  target: OCA 15.0-current
+  merges:
+    - OCA 15.0
+
+./src/e-commerce:
+  remotes:
+    OCA: https://github.com/OCA/e-commerce
+  target: OCA 15.0-current
+  merges:
+    - OCA 15.0
+
+./src/edi:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/edi
+  target: OCA 15.0-current
+  merges:
+    - OCA 15.0
+
+./src/l10n-france:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/l10n-france
+  target: OCA 15.0-current
+  merges:
+    - OCA 15.0
+
+./src/mis-builder:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/mis-builder
+  target: OCA 15.0-current
+  merges:
+    - OCA 15.0
+
+./src/partner-contact:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/partner-contact
+  target: OCA 15.0-current
+  merges:
+    - OCA 15.0
+
+./src/project:
+  remotes:
+    OCA: https://github.com/OCA/project
+  target: OCA 15.0-current
+  merges:
+    - OCA 15.0
+
+./src/purchase-workflow:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/purchase-workflow
+  target: OCA 15.0-current
+  merges:
+    - OCA 15.0
+
+./src/queue:
+  remotes:
+    OCA: https://github.com/OCA/queue
+    legalsylvain: https://github.com/legalsylvain/queue
+  target: OCA 15.0-current
+  merges:
+    - OCA 15.0
+
+./src/reporting-engine:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/reporting-engine
+  target: OCA 15.0-current
+  merges:
+    - OCA 15.0
+
+./src/sale-workflow:
+  remotes:
+    OCA: https://github.com/OCA/sale-workflow
+  target: OCA 15.0-current
+  merges:
+    - OCA 15.0
+
+./src/server-auth:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/server-auth
+  target: OCA 15.0-current
+  merges:
+    - OCA 15.0
+
+./src/server-backend:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/server-backend
+  target: OCA 15.0-current
+  merges:
+    - OCA 15.0
+
+./src/server-brand:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/server-brand
+  target: OCA 15.0-current
+  merges:
+    - OCA 15.0
+
+./src/server-env:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/server-env
+  target: OCA 15.0-current
+  merges:
+    - OCA 15.0
+
+./src/server-tools:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/server-tools
+  target: OCA 15.0-current
+  merges:
+    - OCA 15.0
+
+./src/server-ux:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/server-ux
+  target: OCA 15.0-current
+  merges:
+    - OCA 15.0
+
+./src/social:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/social
+  target: OCA 15.0-current
+  merges:
+    - OCA 15.0
+
+./src/stock-logistics-workflow:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/stock-logistics-workflow
+  target: OCA 15.0-current
+  merges:
+    - OCA 15.0
+
+./src/web:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/web
+  target: OCA 15.0-current
+  merges:
+    - OCA 15.0
+
+./src/website:
+  remotes:
+    OCA: https://github.com/OCA/website
+  target: OCA 15.0-current
+  merges:
+    - OCA 15.0
