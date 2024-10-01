@@ -1,0 +1,323 @@
+##############################################################################
+## Odoo Repository
+##############################################################################
+
+./src/odoo:
+    defaults:
+        depth: 1
+    remotes:
+        odoo: https://github.com/odoo/odoo
+    target: odoo 12.0-target
+    merges:
+        - odoo 12.0
+
+##############################################################################
+## OpenUpgrade Repository
+##############################################################################
+
+./src/openupgrade:
+    defaults:
+        depth: 1
+    remotes:
+        OCA: https://github.com/OCA/OpenUpgrade
+    target: OCA 12.0-target
+    merges:
+        - OCA 12.0
+
+##############################################################################
+## OCA
+##############################################################################
+
+./src/account-budgeting:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/account-budgeting
+  target: OCA 12.0-current
+  merges:
+    - OCA 12.0
+
+./src/account-financial-reporting:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/account-financial-reporting
+  target: OCA 12.0-current
+  merges:
+    - OCA 12.0
+
+./src/account-financial-tools:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/account-financial-tools
+  target: OCA 12.0-current
+  merges:
+    - OCA 12.0
+
+./src/account-invoicing:
+  remotes:
+    OCA: https://github.com/OCA/account-invoicing
+  target: OCA 12.0-current
+  merges:
+    - OCA 12.0
+    # fcayre:12.0-add-account_invoice_merge_auto
+    - OCA refs/pull/1087/head
+    # fcayre:12.0-mig-account_invoice_merge_attachment
+    - OCA refs/pull/1088/head
+    # fcayre:12.0-mig-account_invoice_merge_payment
+    - OCA refs/pull/1089/head
+    # fcayre:12.0-mig-account_invoice_merge_auto_pay
+    - OCA refs/pull/1090/head
+
+./src/account-payment:
+  remotes:
+    OCA: https://github.com/OCA/account-payment
+  target: OCA 12.0-current
+  merges:
+    - OCA 12.0
+    - OCA refs/pull/457/head
+
+./src/account-reconcile:
+  remotes:
+    OCA: https://github.com/OCA/account-reconcile
+  target: OCA 12.0-current
+  merges:
+    - OCA 12.0
+
+./src/bank-payment:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/bank-payment
+  target: OCA 12.0-current
+  merges:
+    - OCA 12.0
+
+./src/bank-statement-import:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/bank-statement-import
+  target: OCA 12.0-current
+  merges:
+    - OCA 12.0
+
+./src/connector-telephony:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/connector-telephony
+  target: OCA 12.0-current
+  merges:
+    - OCA 12.0
+
+./src/contract:
+  remotes:
+    OCA: https://github.com/OCA/contract
+  target: OCA 12.0-current
+  merges:
+    - OCA 12.0
+    - OCA refs/pull/798/head
+
+./src/e-commerce:
+  remotes:
+    OCA: https://github.com/OCA/e-commerce
+  target: OCA 12.0-current
+  merges:
+    - OCA 12.0
+    # fcayre:12-mig-website_sale_affiliate
+    - OCA refs/pull/610/head
+    # fcayre:12-add-website_sale_affiliate_product_restriction
+    - OCA refs/pull/611/head
+    # fcayre:12-add-website_sale_affiliate_portal
+    - OCA refs/pull/612/head
+    # legalsylvain:12.0-FIX-website_sale_hide_price-inheritance-product-view
+    - OCA refs/pull/615/head
+    # fcayre:12.0_add_website_sale_payment_slimpay
+    - OCA refs/pull/620/head
+
+./src/edi:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/edi
+  target: OCA 12.0-current
+  merges:
+    - OCA 12.0
+
+./src/l10n-france:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/l10n-france
+  target: OCA 12.0-current
+  merges:
+    - OCA 12.0
+
+./src/mis-builder:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/mis-builder
+  target: OCA 12.0-current
+  merges:
+    - OCA 12.0
+
+./src/partner-contact:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/partner-contact
+  target: OCA 12.0-current
+  merges:
+    - OCA 12.0
+
+./src/project:
+  remotes:
+    OCA: https://github.com/OCA/project
+  target: OCA 12.0-current
+  merges:
+    - OCA 12.0
+    - OCA refs/pull/890/head
+
+./src/purchase-workflow:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/purchase-workflow
+  target: OCA 12.0-current
+  merges:
+    - OCA 12.0
+
+./src/queue:
+  remotes:
+    OCA: https://github.com/OCA/queue
+    legalsylvain: https://github.com/legalsylvain/queue
+  target: OCA 12.0-current
+  merges:
+    - OCA 12.0
+
+./src/reporting-engine:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/reporting-engine
+  target: OCA 12.0-current
+  merges:
+    - OCA 12.0
+
+./src/sale-workflow:
+  remotes:
+    OCA: https://github.com/OCA/sale-workflow
+  target: OCA 12.0-current
+  merges:
+    - OCA 12.0
+    - OCA refs/pull/1891/head
+
+./src/server-auth:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/server-auth
+  target: OCA 12.0-current
+  merges:
+    - OCA 12.0
+
+./src/server-backend:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/server-backend
+  target: OCA 12.0-current
+  merges:
+    - OCA 12.0
+
+./src/server-brand:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/server-brand
+  target: OCA 12.0-current
+  merges:
+    - OCA 12.0
+
+./src/server-env:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/server-env
+  target: OCA 12.0-current
+  merges:
+    - OCA 12.0
+
+./src/server-tools:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/server-tools
+  target: OCA 12.0-current
+  merges:
+    - OCA 12.0
+
+./src/server-ux:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/server-ux
+  target: OCA 12.0-current
+  merges:
+    - OCA 12.0
+
+./src/social:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/social
+  target: OCA 12.0-current
+  merges:
+    - OCA 12.0
+
+./src/stock-logistics-workflow:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/stock-logistics-workflow
+  target: OCA 12.0-current
+  merges:
+    - OCA 12.0
+
+./src/web:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/web
+  target: OCA 12.0-current
+  merges:
+    - OCA 12.0
+
+./src/website:
+  remotes:
+    OCA: https://github.com/OCA/website
+  target: OCA 12.0-current
+  merges:
+    - OCA 12.0
+    - OCA refs/pull/779/head
+
+##############################################################################
+## Commown and other custom
+##############################################################################
+
+./src/odoo-usability:
+  remotes:
+    fcayre: https://github.com/fcayre/odoo-usability
+  target: fcayre 12.0-current
+  merges:
+    - fcayre 12.0-fix-account_usability-and-make-pip-installable
+
+./src/commown-odoo-addons:
+  remotes:
+    commown: https://github.com/commown/commown-odoo-addons
+  target: commown 12.0-current
+  merges:
+    - commown 12.0
