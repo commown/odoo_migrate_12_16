@@ -321,3 +321,4 @@
   target: commown 12.0-current
   merges:
     - commown 12.0
+    - commown 12.0-fix-commown-migration-problems
