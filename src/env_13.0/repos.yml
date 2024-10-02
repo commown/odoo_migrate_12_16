@@ -280,3 +280,10 @@
   target: OCA 13.0-current
   merges:
     - OCA 13.0
+
+./src/survey:
+  remotes:
+    OCA: https://github.com/OCA/survey
+  target: OCA 13.0-current
+  merges:
+    - OCA 13.0
