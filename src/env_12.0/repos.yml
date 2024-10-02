@@ -304,6 +304,13 @@
     - OCA 12.0
     - OCA refs/pull/779/head
 
+./src/survey:
+  remotes:
+    OCA: https://github.com/OCA/survey
+  target: OCA 12.0-current
+  merges:
+    - OCA 12.0
+
 ##############################################################################
 ## Commown and other custom
 ##############################################################################
