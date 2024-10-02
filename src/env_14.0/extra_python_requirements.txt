@@ -1,0 +1,24 @@
+# Mandatory library used in all odoo-openupgrade-wizard
+# Note: As the openupgradelib is not allways up to date in pypi,
+# we use the github master url.
+git+https://github.com/OCA/openupgradelib@master#egg=openupgradelib
+
+# Library used to run generate-module-analysis command
+# dependencies of the module OCA/server-tools 'upgrade_analysis'
+odoorpc
+mako
+
+# OCA module python dependencies:
+# account_loan:
+numpy
+
+# Commown python deps:
+iso8601
+git+https://github.com/fcayre/python-hal-codec.git@unique-link-keys
+pdfminer.six==20181108
+phonenumbers
+py3o.formats
+py3o.template
+python-magic
+requests
+requests_toolbelt
