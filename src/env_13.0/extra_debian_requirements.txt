@@ -1,0 +1,3 @@
+pdfjam
+poppler-utils
+librsvg2-bin
