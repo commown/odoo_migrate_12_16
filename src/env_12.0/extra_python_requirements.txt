@@ -11,6 +11,8 @@ mako
 # OCA module python dependencies:
 # account_loan:
 numpy
+# module_analysis:
+pygount
 
 # Commown python deps:
 iso8601
