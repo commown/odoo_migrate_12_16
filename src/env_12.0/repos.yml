@@ -58,17 +58,18 @@
 ./src/account-invoicing:
   remotes:
     OCA: https://github.com/OCA/account-invoicing
+    commown: https://github.com/commown/account-invoicing
   target: OCA 12.0-current
   merges:
     - OCA 12.0
-    # fcayre:12.0-add-account_invoice_merge_auto
-    - OCA refs/pull/1087/head
-    # fcayre:12.0-mig-account_invoice_merge_attachment
-    - OCA refs/pull/1088/head
-    # fcayre:12.0-mig-account_invoice_merge_payment
-    - OCA refs/pull/1089/head
-    # fcayre:12.0-mig-account_invoice_merge_auto_pay
-    - OCA refs/pull/1090/head
+    # OCA refs/pull/1087/head:
+    - commown 12.0-add-account_invoice_merge_auto
+    # OCA refs/pull/1088/head:
+    - commown 12.0-mig-account_invoice_merge_attachment
+    # OCA refs/pull/1089/head:
+    - commown 12.0-mig-account_invoice_merge_payment
+    # OCA refs/pull/1090/head:
+    - commown 12.0-mig-account_invoice_merge_auto_pay
 
 ./src/account-payment:
   remotes:
