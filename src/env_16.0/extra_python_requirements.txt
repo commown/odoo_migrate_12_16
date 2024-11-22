@@ -21,6 +21,7 @@ pdfminer.six==20181108
 phonenumbers
 py3o.formats
 py3o.template
+pytest-odoo
 python-magic
 requests
 requests_toolbelt
