@@ -1,3 +1,6 @@
 texlive-extra-utils
 poppler-utils
+python3-ipython
+python3-ipdb
 librsvg2-bin
+tmux
