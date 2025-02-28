@@ -298,3 +298,10 @@
   target: akretion 16.0-current
   merges:
     - akretion 16.0
+
+./src/commown-odoo-addons:
+  remotes:
+    commown: https://github.com/commown/commown-odoo-addons
+  target: commown 16.0-current
+  merges:
+    - commown 16.0
