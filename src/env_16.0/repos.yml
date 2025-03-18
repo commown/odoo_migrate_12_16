@@ -99,9 +99,12 @@
     depth: 1
   remotes:
     OCA: https://github.com/OCA/connector-telephony
+    louck: https://github.com/9184Lucky/connector-telephony/
   target: OCA 16.0-current
   merges:
     - OCA 16.0
+    # PR 335
+    - louck 16.0-mig-sms_ovh_http
 
 ./src/contract:
   remotes:
