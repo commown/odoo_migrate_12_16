@@ -1,5 +1,5 @@
 # <OOW> : Copy of https://github.com/odoo/odoo/blob/16.0/setup/package.dfsrc
-FROM debian:buster
+FROM debian:bookworm
 
 RUN apt-get update && \
     apt-get install -y locales && \
@@ -36,14 +36,17 @@ RUN apt-get update -qq \
 # <OOW> Install Python librairies
 COPY ./src/odoo/requirements.txt /odoo_python_requirements.txt
 COPY extra_python_requirements.txt /extra_python_requirements.txt
-RUN pip3 install --upgrade pip \
-    && python3 -m pip install --no-cache-dir setuptools-scm \
-    && python3 -m pip install --no-cache-dir -r /odoo_python_requirements.txt \
-    && python3 -m pip install --no-cache-dir -r /extra_python_requirements.txt
+RUN apt search setuptools-scm
+RUN apt-get update -qq
+RUN apt-get install -y python3-setuptools-scm
+RUN python3 -m pip install --break-system-packages --no-cache-dir -r /odoo_python_requirements.txt \
+    && python3 -m pip install --break-system-packages --no-cache-dir -r /extra_python_requirements.txt
+
+RUN apt clean -y
 
 # <OOW> Get local user id and set it to the odoo user
 ARG LOCAL_USER_ID
 
-RUN useradd --uid $LOCAL_USER_ID --non-unique odoo
+RUN useradd --uid $LOCAL_USER_ID -b /var/lib --create-home --non-unique odoo
 
 USER odoo
