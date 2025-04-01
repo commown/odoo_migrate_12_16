@@ -21,3 +21,12 @@ oow_launch_test() {
 last_log() {
     echo log/$(ls log | tail -n 1)
 }
+
+field_mig_info() {
+    fieldname=$1
+    grep -w $fieldname ./src/env_1*/src/openupgrade/openupgrade_scripts/scripts/*/*/upgrade_analysis_work.txt
+}
+
+v16() {
+    cd src/env_16.0/src/;
+}
