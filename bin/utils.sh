@@ -15,7 +15,7 @@ oow_module_name() {
 }
 
 oow_launch_test() {
-    docker exec -ti $(oow_docker_name) bash -c "cd /env/src/env_16.0/src/commown-odoo-addons/$(oow_module_name)/tests && PYTHONPATH=/odoo_env/src/odoo pytest -v --odoo-config /odoo_env/odoo_test.conf --odoo-database $(oow_db_name) -s $*"
+    docker exec -ti $(oow_docker_name) bash -c "cd /env/src/env_16.0/src/*/$(oow_module_name)/tests && PYTHONPATH=/odoo_env/src/odoo pytest -v --odoo-config /odoo_env/odoo_test.conf --odoo-database $(oow_db_name) -s $*"
 }
 
 last_log() {
