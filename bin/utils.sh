@@ -22,8 +22,26 @@ oow_launch_test() {
     docker exec -ti $(oow_docker_name) bash -c "cd /env/src/env_16.0/src/*/$(oow_module_name)/tests && PYTHONPATH=/odoo_env/src/odoo pytest -v --odoo-config /odoo_env/odoo_test.conf --odoo-database $(oow_db_name) -s $*"
 }
 
+oow_run_odoo_with_all_ported_modules() {
+   oow run -s 6 --with-demo -d test_16.0_all -i $(oow_all_ported_modules)
+}
+
+oow_all_ported_modules() {
+  ls src/env_16.0/src/commown-odoo-addons/*/__manifest__.py | awk -F/ '{print $5}' | tr '\n' ','
+}
+
+oow_launch_test_all() {
+    module=$1
+    shift
+    docker exec -ti $(oow_docker_name) bash -c "cd /env/src/env_16.0/src/*/${module}/tests && PYTHONPATH=/odoo_env/src/odoo pytest -v --odoo-config /odoo_env/odoo_test.conf --odoo-database test_16.0_all -s $*"
+}
+
 oow_shell() {
     docker exec -ti $(oow_docker_name) bash -c "PYTHONPATH=/odoo_env/src/odoo /odoo_env/src/odoo/odoo-bin shell --config=/odoo_env/odoo.conf --data-dir=/env/filestore/ --addons-path=$(oow_addons_path) --db_host=db --db_port=5432 --db_user=odoo --db_password=odoo --workers=0 --database $(oow_db_name)"
+}
+
+oow_bash() {
+    docker exec -ti $* $(oow_docker_name) bash
 }
 
 oow_last_log() {
