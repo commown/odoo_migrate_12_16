@@ -5,10 +5,14 @@ oow_addons_path() {
 oow_docker_name() { docker ps | awk '/oow-commown/ {print $NF}'; }
 
 oow_db_name() {
-    docker inspect $(oow_docker_name) \
-    | grep -A1 -- '--database' \
-    | tail -1 \
-    | tr -d '", '
+    if grep '^12\.' /etc/debian_version > /dev/null ; then
+	docker inspect $(oow_docker_name) | awk -F'[="]' '/--database/ {print $3; exit}'
+    else
+	docker inspect $(oow_docker_name) \
+	    | grep -A1 -- '--database' \
+	    | tail -1 \
+	    | tr -d '", '
+    fi
 }
 
 oow_module_name() {
