@@ -107,10 +107,12 @@
   remotes:
     OCA: https://github.com/OCA/contract
     commown: https://github.com/commown/contract
+    fcayre: https://github.com/fcayre/contract
   target: OCA 16.0-current
   merges:
     - OCA 16.0
     - commown 16.0-imp-contract_payment_auto-packaging
+    - fcayre 16.0-mig-contract_forecast
 
 ./src/e-commerce:
   remotes:
