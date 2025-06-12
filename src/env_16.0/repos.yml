@@ -106,11 +106,11 @@
 ./src/contract:
   remotes:
     OCA: https://github.com/OCA/contract
+    commown: https://github.com/commown/contract
   target: OCA 16.0-current
   merges:
     - OCA 16.0
-    # 9184Lucky:16.0-mig-contract_payment_auto
-    - OCA refs/pull/1231/head
+    - commown 16.0-imp-contract_payment_auto-packaging
 
 ./src/e-commerce:
   remotes:
