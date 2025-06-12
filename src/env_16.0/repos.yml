@@ -297,9 +297,11 @@
 ./src/odoo-usability:
   remotes:
     akretion: https://github.com/akretion/odoo-usability
+    commown: https://github.com/commown/odoo-usability
   target: akretion 16.0-current
   merges:
     - akretion 16.0
+    - commown 16.0-imp-whool-packaging
 
 ./src/commown-odoo-addons:
   remotes:
