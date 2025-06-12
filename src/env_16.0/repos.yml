@@ -112,6 +112,7 @@
   merges:
     - OCA 16.0
     - commown 16.0-imp-contract_payment_auto-packaging
+    - commown 16.0-imp-contract_forecast-factor-out-jobs-creation
     - fcayre 16.0-mig-contract_forecast
 
 ./src/e-commerce:
