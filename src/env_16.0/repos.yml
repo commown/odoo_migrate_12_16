@@ -59,10 +59,12 @@
   remotes:
     OCA: https://github.com/OCA/account-invoicing
     commown: https://github.com/commown/account-invoicing
+    luc: https://github.com/9184Lucky/account-invoicing
   target: OCA 16.0-current
   merges:
     - OCA 16.0
     - commown 16.0-mig-account_invoice_merge_attachment
+    - luc 16.0-mig-account_invoice_merge_payment
 
 ./src/account-payment:
   remotes:
