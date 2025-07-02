@@ -287,9 +287,11 @@
 ./src/website:
   remotes:
     OCA: https://github.com/OCA/website
+    lena: https://github.com/Honeyxilia/website
   target: OCA 16.0-current
   merges:
     - OCA 16.0
+    - lena 16.0-imp-add-hcaptcha-compability
 
 ./src/survey:
   remotes:
