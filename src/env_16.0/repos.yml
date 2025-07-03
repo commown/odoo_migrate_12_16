@@ -28,6 +28,15 @@
 ## OCA
 ##############################################################################
 
+./src/account-analytic:
+  defaults:
+    depth: 1
+  remotes:
+    OCA: https://github.com/OCA/account-analytic
+  target: OCA 16.0-current
+  merges:
+    - OCA 16.0
+
 ./src/account-budgeting:
   defaults:
     depth: 1
