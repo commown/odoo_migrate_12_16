@@ -132,9 +132,11 @@
 ./src/e-commerce:
   remotes:
     OCA: https://github.com/OCA/e-commerce
+    commown: https://github.com/commown/e-commerce
   target: OCA 16.0-current
   merges:
     - OCA 16.0
+    - commown 16.0-mig-website_sale_affiliate
 
 ./src/edi:
   defaults:
