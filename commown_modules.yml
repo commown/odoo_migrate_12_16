@@ -1,0 +1,55 @@
+commown_account:
+    - account_partner_auto_create
+
+project_stage_portal_name:
+    - project_portal_displayed_name
+
+project_task_internal_followup:
+    - project_task_internal_followup
+
+commown_support:
+    - project_task_action_send_sms_reminder
+
+commown_contract:
+    - contract_transaction_label
+    - contract_payment_issues
+    - contract_add_template_name
+    - contract_disable_defaults (wip name)
+
+commown_crm:
+    - crm_lead_add_contract_id
+    - crm_lead_action_send_sms_doc_reminder
+
+commown_sale:
+    - sale_order_sort_accessories
+    - sale_order_investment_followup
+
+commown_customer_team_manager:
+    - customer_team_manager_force_b2b
+
+commown_users:
+    - res_user_import_no_reset_mail
+    - res_user_unsubscribe_channels_on_role_removed
+
+commown_partner:
+    - res_partner_administrative_documents
+    - res_partner_default_lang
+    - res_partner_sync_payment_details
+
+commown_product:
+    - product_is_env_user_fr
+    - product_warn_message
+
+commown_lang:
+    - res_lang_website_published (potentiellement fusionner avec website_sale_lang_published)
+
+commown_website:
+    - website_sale_service_details
+    - website_sale_lang_published
+
+commown_website_sale_coupon:
+    - website_sale_coupon_pdf_file
+    - website_sale_coupon_entity_title_prefix
+
+commown_utm:
+    - utm_handle_related_records
