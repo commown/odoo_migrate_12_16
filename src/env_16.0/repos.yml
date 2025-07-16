@@ -140,10 +140,13 @@
   remotes:
     OCA: https://github.com/OCA/e-commerce
     commown: https://github.com/commown/e-commerce
+    lena: https://github.com/Honeyxilia/e-commerce
   target: OCA 16.0-current
   merges:
     - OCA 16.0
     - commown 16.0-mig-website_sale_affiliate
+    - lena 16.0-mig-website_sale_affiliate_product_restriction
+    - lena 16.0-mig-website_sale_affiliate_portal
 
 ./src/edi:
   defaults:
