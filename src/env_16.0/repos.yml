@@ -124,10 +124,10 @@
   target: OCA 16.0-current
   merges:
     - OCA 16.0
-    - commown 16.0-imp-contract_payment_auto-packaging
+    - fcayre 16.0-mig-contract_forecast
     - commown 16.0-imp-contract_forecast-factor-out-jobs-creation
     - commown 16.0-imp-contract_forecast-allow-create-delete-cline-in-same-transaction
-    - fcayre 16.0-mig-contract_forecast
+    - commown 16.0-imp-contract_payment_auto-packaging
 
 ./src/crm:
   remotes:
