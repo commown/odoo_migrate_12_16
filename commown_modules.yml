@@ -40,12 +40,8 @@ commown_product:
     - product_is_env_user_fr
     - product_warn_message
 
-commown_lang:
-    - res_lang_website_published (potentiellement fusionner avec website_sale_lang_published)
-
 commown_website:
     - website_sale_service_details
-    - website_sale_lang_published
 
 commown_website_sale_coupon:
     - website_sale_coupon_pdf_file
