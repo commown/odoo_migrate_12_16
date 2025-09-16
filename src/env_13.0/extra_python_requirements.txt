@@ -7,6 +7,7 @@ git+https://github.com/OCA/openupgradelib@master#egg=openupgradelib
 # dependencies of the module OCA/server-tools 'upgrade_analysis'
 odoorpc
 mako
+astor
 
 # OCA module python dependencies:
 # account_loan:
