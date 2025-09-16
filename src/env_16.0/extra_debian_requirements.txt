@@ -4,5 +4,6 @@ python3-ipython
 python3-ipdb
 python3-magic
 python3-odf
+libreoffice-nogui
 librsvg2-bin
 tmux
