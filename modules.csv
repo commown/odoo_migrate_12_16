@@ -70,6 +70,7 @@ calendar_sms
 commown
 commown_accounting
 commown_automated_control
+commown_b2b_mail_channel
 commown_contract_forecast
 commown_contractual_issue
 commown_contract_variable_discount
@@ -84,6 +85,7 @@ commown_res_partner_sms
 commown_self_troubleshooting
 commown_shareholder_register
 commown_shipping
+commown_user_roles
 contacts
 contract
 contract_auto_merge_invoice
@@ -190,7 +192,6 @@ urban_mine
 utm
 web
 web_advanced_search
-web_diagram
 web_dialog_size
 web_domain_field
 web_drop_target
