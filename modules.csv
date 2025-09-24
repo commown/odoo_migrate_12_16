@@ -100,10 +100,12 @@ contract_variable_quantity
 crm_livechat
 crm_phone
 crm_stage_email_template
+customer_device_manager
 customer_manager_base
 customer_team_manager
 custom_report
 date_range
+date_range_portal
 decimal_precision
 digest
 disable_odoo_online
