@@ -1,9 +1,10 @@
-# <OOW> : Copy of https://github.com/odoo/odoo/blob/12.0/setup/package.dfsrc
-FROM debian:stretch
+# <OOW> : Copy of https://github.com/odoo/odoo/blob/13.0/setup/package.dfsrc
+FROM debian:buster
 
 RUN sed -i -- 's/security.debian.org/archive.debian.org/g' /etc/apt/**.list
 RUN sed -i -- 's/deb.debian.org/archive.debian.org/g' /etc/apt/**.list
-RUN sed -i -- 's/stretch-updates/stretch/g' /etc/apt/**.list
+RUN sed -i -- 's/buster-updates/buster/g' /etc/apt/**.list
+
 
 RUN apt-get update && \
     apt-get install -y locales && \
@@ -22,7 +23,7 @@ RUN apt-get update -qq &&  \
         postgresql-server-dev-all \
         postgresql-client \
         adduser \
-        libsass0 \
+        libsass1 \
         libxml2-dev \
         libxslt1-dev \
         libldap2-dev \

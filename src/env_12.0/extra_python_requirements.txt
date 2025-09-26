@@ -17,7 +17,7 @@ pygount
 # Commown python deps:
 iso8601
 git+https://github.com/fcayre/python-hal-codec.git@unique-link-keys
-pdfminer.six
+pdfminer.six==20181108
 phonenumbers
 py3o.formats
 py3o.template
