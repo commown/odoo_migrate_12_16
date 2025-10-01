@@ -218,11 +218,9 @@
 ./src/sale-workflow:
   remotes:
     OCA: https://github.com/OCA/sale-workflow
-    lena: https://github.com/Honeyxilia/sale-workflow
   target: OCA 16.0-current
   merges:
     - OCA 16.0
-    - lena 16.0-mig-sale_product_email
 
 ./src/server-auth:
   defaults:
