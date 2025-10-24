@@ -1,3 +1,7 @@
+-- Ticket #43655
+UPDATE ir_model_data SET module="account_payment_slimpay", name="payment_provider_slimpay"
+WHERE module="payment" AND name="payment_acquirer_slimpay";
+
 -- Ticket #42292
 UPDATE ir_model_data SET module='customer_manager_base'
 WHERE module='customer_team_manager' AND name='group_customer_admin';
