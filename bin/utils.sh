@@ -49,7 +49,7 @@ oow_bash() {
 }
 
 oow_last_log() {
-    echo log/$(ls log | tail -n 1)
+    echo log/$(ls -rt log/ | tail -n 1)
 }
 
 oow_field_mig_info() {
