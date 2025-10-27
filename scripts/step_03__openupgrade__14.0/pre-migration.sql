@@ -9,3 +9,15 @@
 INSERT INTO account_journal_inbound_payment_method_rel
 VALUES (11, 1)
 ON CONFLICT DO NOTHING;
+
+-- v14 generates a new external id named l10n_fr.1_pcg_58 for the new
+-- account.group model, which collides with our account.account own
+-- external id... So we rename our, which should have no real
+-- consequence.
+
+UPDATE ir_model_data
+SET name = '1_pcg_58_'
+WHERE
+  module = 'l10n_fr'
+  AND name = '1_pcg_58'
+  AND model = 'account.account';
