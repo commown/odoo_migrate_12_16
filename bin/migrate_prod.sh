@@ -33,16 +33,19 @@ odoo_addons()
     done
 }
 
-which rsync > /dev/null || exit 1
+prereqs()
+{
+  which rsync > /dev/null || exit 1
 
-if [ ! -f "$LOCAL_OUTDATED_FILESTORE" ]
-then
-    echo "You need an initial filestore to speed-up restoration."
-    echo "Its path must be: $LOCAL_OUTDATED_FILESTORE."
-    exit 1
-fi
+  if [ ! -f "$LOCAL_OUTDATED_FILESTORE" ]
+  then
+      echo "You need an initial filestore to speed-up restoration."
+      echo "Its path must be: $LOCAL_OUTDATED_FILESTORE."
+      exit 1
+  fi
 
-[ ! -e "$BORG_MOUNT" ] && mkdir "$BORG_MOUNT"
+  [ ! -e "$BORG_MOUNT" ] && mkdir "$BORG_MOUNT"
+}
 
 bmount()
 {
@@ -152,7 +155,7 @@ make_safe()
   echo "Done! The DB is safe"
 }
 
-migrate()
+migrate_0_2()
 {
   # Launch the migration, step by step
   date
@@ -169,7 +172,10 @@ migrate()
   oow copydb -s odoo_commown -d odoo_commown-step-2  > /dev/null 2>&1 || exit 1
 
   oow dropdb -d odoo_commown-step-0 > /dev/null 2>&1 || exit 1
+}
 
+migrate_3()
+{
   # STEP 3
 
   date
@@ -179,7 +185,10 @@ migrate()
   oow copydb -s odoo_commown -d odoo_commown-step-3  > /dev/null 2>&1 || exit 1
 
   oow dropdb -d odoo_commown-step-2 > /dev/null 2>&1 || exit 1
+}
 
+migrate_4_6()
+{
   # STEP 4 and 5
 
   date
@@ -226,8 +235,10 @@ send()
 
 }
 
-
+prereqs || exit 1
 restore || exit 1
 make_safe || exit 1
-migrate || exit 1
+migrate_0_2 || exit 1
+migrate_3 || exit 1
+migrate_4_6 || exit 1
 send || exit 1
