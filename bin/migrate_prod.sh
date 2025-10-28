@@ -13,6 +13,12 @@ DOCKER_BORG_MOUNT=/env/borg_mount
 
 LOCAL_OUTDATED_FILESTORE="$ODOO_MIGRATE_DIR"/odoo_commown_filestore.tar
 
+err()
+{
+  echo $@
+  exit 1
+}
+
 odoo_addons()
 {
     sep=""
@@ -35,7 +41,7 @@ odoo_addons()
 
 prereqs()
 {
-  which rsync > /dev/null || exit 1
+  which rsync > /dev/null || err "Missing rsync"
 
   if [ ! -f "$LOCAL_OUTDATED_FILESTORE" ]
   then
@@ -44,7 +50,7 @@ prereqs()
       exit 1
   fi
 
-  [ ! -e "$BORG_MOUNT" ] && mkdir "$BORG_MOUNT"
+  [ ! -e "$BORG_MOUNT" ] && mkdir "$BORG_MOUNT" || true
 }
 
 bmount()
@@ -235,10 +241,10 @@ send()
 
 }
 
-prereqs || exit 1
-restore || exit 1
-make_safe || exit 1
-migrate_0_2 || exit 1
-migrate_3 || exit 1
-migrate_4_6 || exit 1
-send || exit 1
+
+prereqs || err "Missing prerequisites"
+restore || err "Restore failed"
+make_safe || err "Making the DB safe failed"
+migrate_0_2 || err "Migrate step 0-2 failed"
+migrate_3 || err "Migrate step 3 failed"
+migrate_4_6 || err "Migrate step 4-6 failed"
