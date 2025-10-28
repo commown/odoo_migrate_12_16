@@ -218,12 +218,12 @@ migrate_4_6()
   echo "Migration: DONE!"
 }
 
-send()
+dump()
 {
   # Dump the resulting DB and upload it to Hirondelle
 
   date
-  echo "Dumping the DB and filestore for shipping..."
+  echo "Dumping the DB and filestore..."
 
   oow dumpdb -d odoo_commown \
       --database-path odoo-commown-16.tar \
@@ -232,13 +232,7 @@ send()
       --filestore-format t > /dev/null 2>&1
 
   date
-  echo "Shipping to destination..."
-
-  scp odoo-commown-16.tar filestore-16.tar root@hirondelle.netbird.selfhosted:/root/
-
-  date
-  echo "Shipping: DONE!"
-
+  echo "Done!"
 }
 
 
@@ -248,3 +242,4 @@ make_safe || err "Making the DB safe failed"
 migrate_0_2 || err "Migrate step 0-2 failed"
 migrate_3 || err "Migrate step 3 failed"
 migrate_4_6 || err "Migrate step 4-6 failed"
+dump
