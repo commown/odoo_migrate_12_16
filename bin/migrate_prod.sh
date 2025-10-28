@@ -195,24 +195,15 @@ migrate_3()
 
 migrate_4_6()
 {
-  # STEP 4 and 5
+  # STEP 4, 5 and 6
 
   date
-  echo "Migration: steps 4 and 5 (duration ~5h)..."
+  echo "Migration: steps 4, 5 and 6 (duration ~5h)..."
 
-  oow upgrade --first-step 4 --last-step 5 -d odoo_commown > /dev/null 2>&1 || exit 1
-  oow copydb -s odoo_commown -d odoo_commown-step-5  > /dev/null 2>&1 || exit 1
-
-  oow dropdb -d odoo_commown-step-3 > /dev/null 2>&1 || exit 1
-
-  # STEP 6
-  date
-  echo "Migration: step 6 (duration ~5 minutes)..."
-
-  oow upgrade --first-step 6 --last-step 6 -d odoo_commown > /dev/null 2>&1 || exit 1
+  oow upgrade --first-step 4 --last-step 6 -d odoo_commown > /dev/null 2>&1 || exit 1
   oow copydb -s odoo_commown -d odoo_commown-step-6  > /dev/null 2>&1 || exit 1
 
-  oow dropdb -d odoo_commown-step-5 > /dev/null 2>&1 || exit 1
+  oow dropdb -d odoo_commown-step-3 > /dev/null 2>&1 || exit 1
 
   date
   echo "Migration: DONE!"
