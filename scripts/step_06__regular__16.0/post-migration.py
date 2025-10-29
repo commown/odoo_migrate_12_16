@@ -7,9 +7,10 @@ env = env  # noqa: F821
 
 # Write custom script here
 
-slimpay_tech_name = ""
-env.ref("account_payment_slimpay.payment_provider_slimpay").tech_name = "payment_provider_slimpay"
+# cf. PR 481: Assign tech_name to noupdate records
 
-colissimo 
+env.ref("account_payment_slimpay.payment_provider_slimpay").tech_name = "payment_provider_slimpay"
+env.ref("colissimo_shipping.shipping-account-colissimo-std-account").tech_name = "shipping-account-colissimo-std-account"
+env.ref("colissimo_shipping.shipping-account-colissimo-support-account").tech_name = "shipping-account-colissimo-support-account"
 
 env.cr.commit()
