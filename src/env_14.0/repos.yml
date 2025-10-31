@@ -16,13 +16,13 @@
 ##############################################################################
 
 ./src/openupgrade:
-    defaults:
-        depth: 1
     remotes:
         OCA: https://github.com/OCA/OpenUpgrade
+        lena: https://github.com/Honeyxilia/OpenUpgrade
     target: OCA 14.0-target
     merges:
         - OCA 14.0
+        - lena 14-rating-disable_score_halving_script
 
 ##############################################################################
 ## OCA
