@@ -28,4 +28,8 @@ env.ref("colissimo_shipping.shipping-account-colissimo-support-account").tech_na
 # Ticket #43648
 env['ir.module.module'].search([("name", "=", "account_analytic_tag")]).button_immediate_install()
 
+# Ticket #40262
+env.ref('website_sale.product_custom_text').active = False
+env.ref("website_sale.product_share_buttons").active = False
+
 env.cr.commit()
