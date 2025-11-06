@@ -19,6 +19,18 @@ err()
   exit 1
 }
 
+rm_website_sale_coupon()
+{
+  # This module carries the same name as a module introduced in Odoo v13,
+  # which carried on until Odoo V15 before being renamed.
+  # As such, we remove it, as well as its associated migration scripts to avoid issues.
+  echo "Removing conflicting Odoo module: website_sale_coupon"
+
+  rm -rf "$ODOO_MIGRATE_DIR"/src/*/src/odoo/addons/website_sale_coupon
+  rm -rf "$ODOO_MIGRATE_DIR"/src/*/src/openupgrade/addons/website_sale_coupon
+  rm -rf "$ODOO_MIGRATE_DIR"/src/*/src/openupgrade/openupgrade_scripts/scripts/website_sale_coupon
+}
+
 odoo_addons()
 {
     sep=""
@@ -230,6 +242,7 @@ dump()
 prereqs || err "Missing prerequisites"
 restore || err "Restore failed"
 make_safe || err "Making the DB safe failed"
+rm_website_sale_coupon
 migrate_0_2 || err "Migrate step 0-2 failed"
 migrate_3 || err "Migrate step 3 failed"
 migrate_4_6 || err "Migrate step 4-6 failed"
