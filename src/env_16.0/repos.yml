@@ -16,13 +16,13 @@
 ##############################################################################
 
 ./src/openupgrade:
-    defaults:
-        depth: 1
     remotes:
         OCA: https://github.com/OCA/OpenUpgrade
+        commown: https://github.com/commown/OpenUpgrade
     target: OCA 16.0-target
     merges:
         - OCA 16.0
+        - commown 16.0-remove_website_sale_coupon_renaming
 
 ##############################################################################
 ## OCA
