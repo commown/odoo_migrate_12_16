@@ -17,6 +17,12 @@ env.ref("website.default_website").update(
         "recaptcha_v2_verify_url": "https://api.hcaptcha.com/siteverify",
     }
 )
+env.cr.execute(
+    """UPDATE website
+    SET recaptcha_v2_site_key = recaptcha_key_site, 
+    recaptcha_v2_secret_key = recaptcha_key_secret
+    """
+)
 
 
 # cf. PR 481: Assign tech_name to noupdate records
