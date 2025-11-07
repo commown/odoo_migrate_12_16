@@ -1,3 +1,24 @@
+# Installation d'un environnement OOW (Odoo OpenUpgrade Wizard)
+
+1. Installez le paquet `odoo-openupgrade-wizard` : 
+```sh
+pipx install odoo-openupgrade-wizard
+```
+
+NOTE: l'initialisation du projet OOW a déjà été faite, 
+et les fichiers concernés ont été poussés sur le dépôt `odoo_migrate_12_16`.
+Il n'y a donc pas besoin de refaire `oow init`
+
+2. Récupérez le code des différentes versions de Odoo
+```sh
+oow get-code
+```
+
+3. Construisez les images Docker pour les différentes versions de Odoo
+```sh
+oow docker-build
+``` 
+
 # Migration de base de données Odoo
 
 ## Phase de mise au point
