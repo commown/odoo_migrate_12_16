@@ -16,13 +16,13 @@
 ##############################################################################
 
 ./src/openupgrade:
-    defaults:
-        depth: 1
     remotes:
         OCA: https://github.com/OCA/OpenUpgrade
+        commown: https://github.com/commown/OpenUpgrade
     target: OCA 15.0-target
     merges:
         - OCA 15.0
+        - commown 15.0-account_usability_akretion_rename
 
 ##############################################################################
 ## OCA
