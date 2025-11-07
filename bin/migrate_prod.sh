@@ -197,7 +197,7 @@ migrate_3()
   # STEP 3
 
   date
-  echo "Migration: step 3 (duration ~5h)..."
+  echo "Migration: step 3 (duration ~7h on hirondelle)..."
 
   oow upgrade --first-step 3 --last-step 3 -d odoo_commown > /dev/null 2>&1 || exit 1
   oow copydb -s odoo_commown -d odoo_commown-step-3  > /dev/null 2>&1 || exit 1
