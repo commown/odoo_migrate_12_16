@@ -142,6 +142,10 @@
   merges:
     - OCA 16.0
     - commown 16.0-mig-website_sale_affiliate
+    # /!\ The following branch wraps the default value of sale.affiliate.request fields
+    # /!\ which use the odoo.http.request object, in order to have a dummy value
+    # /!\ DO NOT USE IN PRODUCTION
+    - lena 16.0-OOW-ONLY-website_sale_affiliate-default_value_for_migration
     - lena 16.0-mig-website_sale_affiliate_product_restriction
     - lena 16.0-mig-website_sale_affiliate_portal
     - coopiteasy 16.0-mig-website_sale_cart_selectable
