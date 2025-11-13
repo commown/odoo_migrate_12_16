@@ -28,8 +28,8 @@ env.cr.execute(
 # cf. PR 481: Assign tech_name to noupdate records
 
 env.ref("account_payment_slimpay.payment_provider_slimpay").tech_name = "payment_provider_slimpay"
-env.ref("colissimo_shipping.shipping-account-colissimo-std-account").tech_name = "shipping-account-colissimo-std-account"
-env.ref("colissimo_shipping.shipping-account-colissimo-support-account").tech_name = "shipping-account-colissimo-support-account"
+env.ref("commown_shipping.shipping-account-colissimo-std-account").tech_name = "shipping-account-colissimo-std-account"
+env.ref("commown_shipping.shipping-account-colissimo-support-account").tech_name = "shipping-account-colissimo-support-account"
 
 # Ticket #43648
 env['ir.module.module'].search([("name", "=", "account_analytic_tag")]).button_immediate_install()
