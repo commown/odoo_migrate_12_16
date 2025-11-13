@@ -11,6 +11,8 @@ Il n'y a donc pas besoin de refaire `oow init`
 
 2. Récupérez le code des différentes versions de Odoo
 ```sh
+git config --global init.defaultBranch master
+git config --global pull.rebase false
 oow get-code
 ```
 
