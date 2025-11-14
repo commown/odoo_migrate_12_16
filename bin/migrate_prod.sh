@@ -234,10 +234,27 @@ dump()
       --filestore-path filestore-16.tar \
       --filestore-format t > /dev/null 2>&1
 
+  mv filestore-16.tar odoo-commown-16.tar /data/odoo_backups/
   date
   echo "Done!"
 }
 
+restore()
+{
+  docker restart odoo-v16
+  docker exec odoo-v16 systemctl stop odoo
+
+  docker exec odoo-v16 mkdir -p /var/lib/odoo/.local/share/Odoo/filestore/
+  docker exec odoo-v16 tar -C /var/lib/odoo/.local/share/Odoo/filestore/ -xf /tmp/odoo_backups/filestore-16.tar || err "Unarchiving filestore failed"
+  docker exec odoo-v16 mv /var/lib/odoo/.local/share/Odoo/filestore/filestore /var/lib/odoo/.local/share/Odoo/filestore/odoo_commown
+  docker exec odoo-v16 chown -R odoo:odoo /var/lib/odoo/.local/share/Odoo/filestore/
+
+  docker exec --user postgres odoo-v16 dropdb --if-exists odoo_commown
+  docker exec --user postgres odoo-v16 createdb -O odoo odoo_commown
+  docker exec --user postgres odoo-v16 pg_restore -C -d odoo_commown /tmp/odoo_backups/odoo-commown-16.tar
+
+  docker exec odoo-v16 systemctl restart odoo
+}
 
 prereqs || err "Missing prerequisites"
 restore || err "Restore failed"
@@ -247,3 +264,4 @@ migrate_0_2 || err "Migrate step 0-2 failed"
 migrate_3 || err "Migrate step 3 failed"
 migrate_4_6 || err "Migrate step 4-6 failed"
 dump
+restore
