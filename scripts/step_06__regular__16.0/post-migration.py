@@ -38,4 +38,8 @@ env['ir.module.module'].search([("name", "=", "account_analytic_tag")]).button_i
 env.ref('website_sale.product_custom_text').active = False
 env.ref("website_sale.product_share_buttons").active = False
 
+# Ticket #43639
+# => Remove orphenated views from 12.0 module crm_phone
+env['ir.ui.view'].search([("name", "in", ["phonecall.res.partner.form", "crm_phone.crm_lead.form"])]).unlink()
+
 env.cr.commit()
