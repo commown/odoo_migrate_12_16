@@ -239,7 +239,7 @@ dump()
   echo "Done!"
 }
 
-restore()
+restore_odoo_v16()
 {
   docker restart odoo-v16
   docker exec odoo-v16 systemctl stop odoo
@@ -264,4 +264,4 @@ migrate_0_2 || err "Migrate step 0-2 failed"
 migrate_3 || err "Migrate step 3 failed"
 migrate_4_6 || err "Migrate step 4-6 failed"
 dump
-restore
+restore_odoo_v16
