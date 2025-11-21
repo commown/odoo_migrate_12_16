@@ -270,20 +270,27 @@ dump()
 
 restore_odoo_v16()
 {
+  echo "Restoring the migrated DB + filestore into Odoo v16 test instance..."
   docker restart odoo-v16
 
   sleep 60
   docker exec odoo-v16 systemctl stop odoo
 
+  date
+  echo "Moving migrated filestore in Odoo data directories..."
   docker exec odoo-v16 mkdir -p /var/lib/odoo/.local/share/Odoo/filestore/
   docker exec odoo-v16 tar -C /var/lib/odoo/.local/share/Odoo/filestore/ -xf /tmp/odoo_backups/filestore-16.tar || err "Unarchiving filestore failed"
   docker exec odoo-v16 mv /var/lib/odoo/.local/share/Odoo/filestore/filestore /var/lib/odoo/.local/share/Odoo/filestore/odoo_commown
   docker exec odoo-v16 chown -R odoo:odoo /var/lib/odoo/.local/share/Odoo/filestore/
 
+  date
+  echo "Recreating odoo_commown PSQL DB with migrated DB..."
   docker exec --user postgres odoo-v16 dropdb --if-exists odoo_commown
   docker exec --user postgres odoo-v16 createdb -O odoo odoo_commown
   docker exec --user postgres odoo-v16 pg_restore -C -d odoo_commown /tmp/odoo_backups/odoo-commown-16.tar
 
+  date
+  echo "Restore DONE!"
   docker exec odoo-v16 systemctl restart odoo
 }
 
