@@ -189,7 +189,7 @@ migrate_0_2()
   oow upgrade --first-step 1 --last-step 2 -d odoo_commown > /dev/null 2>&1 || exit 1
   oow copydb -s odoo_commown -d odoo_commown-step-2  > /dev/null 2>&1 || exit 1
 
-  oow dropdb -d odoo_commown-step-0 > /dev/null 2>&1 || exit 1
+  #oow dropdb -d odoo_commown-step-0 > /dev/null 2>&1 || exit 1
 }
 
 migrate_3()
@@ -202,23 +202,52 @@ migrate_3()
   oow upgrade --first-step 3 --last-step 3 -d odoo_commown > /dev/null 2>&1 || exit 1
   oow copydb -s odoo_commown -d odoo_commown-step-3  > /dev/null 2>&1 || exit 1
 
-  oow dropdb -d odoo_commown-step-2 > /dev/null 2>&1 || exit 1
+  #oow dropdb -d odoo_commown-step-2 > /dev/null 2>&1 || exit 1
 }
 
-migrate_4_6()
+migrate_4()
 {
-  # STEP 4, 5 and 6
+  # STEP 4
 
   date
-  echo "Migration: steps 4, 5 and 6 (duration ~5h)..."
+  echo "Migration: step 4..."
 
-  oow upgrade --first-step 4 --last-step 6 -d odoo_commown > /dev/null 2>&1 || exit 1
-  oow copydb -s odoo_commown -d odoo_commown-step-6  > /dev/null 2>&1 || exit 1
+  oow upgrade --first-step 4 --last-step 4 -d odoo_commown > /dev/null 2>&1 || exit 1
+  oow copydb -s odoo_commown -d odoo_commown-step-4  > /dev/null 2>&1 || exit 1
 
-  oow dropdb -d odoo_commown-step-3 > /dev/null 2>&1 || exit 1
+  #oow dropdb -d odoo_commown-step-3 > /dev/null 2>&1 || exit 1
 
   date
-  echo "Migration: DONE!"
+}
+
+migrate_5()
+{
+  # STEP 5
+
+  date
+  echo "Migration: step 5..."
+
+  oow upgrade --first-step 5 --last-step 5 -d odoo_commown > /dev/null 2>&1 || exit 1
+  oow copydb -s odoo_commown -d odoo_commown-step-5  > /dev/null 2>&1 || exit 1
+
+  #oow dropdb -d odoo_commown-step-4 > /dev/null 2>&1 || exit 1
+
+  date
+}
+
+migrate_6()
+{
+  # STEP 6
+
+  date
+  echo "Migration: step 6..."
+
+  oow upgrade --first-step 6 --last-step 6 -d odoo_commown > /dev/null 2>&1 || exit 1
+
+  #oow dropdb -d odoo_commown-step-5 > /dev/null 2>&1 || exit 1
+
+  echo "Migration DONE!"
+  date
 }
 
 dump()
@@ -262,6 +291,8 @@ make_safe || err "Making the DB safe failed"
 rm_website_sale_coupon
 migrate_0_2 || err "Migrate step 0-2 failed"
 migrate_3 || err "Migrate step 3 failed"
-migrate_4_6 || err "Migrate step 4-6 failed"
+migrate_4 || err "Migrate step 4 failed"
+migrate_5 || err "Migrate step 5 failed"
+migrate_6 || err "Migrate step 6 failed"
 dump
 restore_odoo_v16
