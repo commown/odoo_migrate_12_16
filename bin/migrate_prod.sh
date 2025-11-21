@@ -280,6 +280,7 @@ restore_odoo_v16()
   echo "Moving migrated filestore in Odoo data directories..."
   docker exec odoo-v16 mkdir -p /var/lib/odoo/.local/share/Odoo/filestore/
   docker exec odoo-v16 tar -C /var/lib/odoo/.local/share/Odoo/filestore/ -xf /tmp/odoo_backups/filestore-16.tar || err "Unarchiving filestore failed"
+  docker exec odoo-v16 rm -r /var/lib/odoo/.local/share/Odoo/filestore/odoo_commown
   docker exec odoo-v16 mv /var/lib/odoo/.local/share/Odoo/filestore/filestore /var/lib/odoo/.local/share/Odoo/filestore/odoo_commown
   docker exec odoo-v16 chown -R odoo:odoo /var/lib/odoo/.local/share/Odoo/filestore/
 
