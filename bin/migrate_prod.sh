@@ -271,6 +271,8 @@ dump()
 restore_odoo_v16()
 {
   docker restart odoo-v16
+
+  sleep 60
   docker exec odoo-v16 systemctl stop odoo
 
   docker exec odoo-v16 mkdir -p /var/lib/odoo/.local/share/Odoo/filestore/
