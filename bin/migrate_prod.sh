@@ -270,6 +270,10 @@ dump()
 
 restore_odoo_v16()
 {
+  echo "Start Odoo site maintenance..."
+  mv /var/www/odoo-v16.commown.priv/maintenance.html{.rename_me,}
+  mv /var/www/pro-v16.commown.priv/maintenance.html{.rename_me,}
+
   echo "Restoring the migrated DB + filestore into Odoo v16 test instance..."
   docker restart odoo-v16
 
@@ -293,16 +297,20 @@ restore_odoo_v16()
   date
   echo "Restore DONE!"
   docker exec odoo-v16 systemctl restart odoo
+
+  echo "Stop Odoo site maintenance..."
+  mv /var/www/pro-v16.commown.priv/maintenance.html{,.rename_me}
+  mv /var/www/pro-v16.commown.priv/maintenance.html{,.rename_me}
 }
 
-prereqs || err "Missing prerequisites"
-restore || err "Restore failed"
-make_safe || err "Making the DB safe failed"
-rm_website_sale_coupon
-migrate_0_2 || err "Migrate step 0-2 failed"
-migrate_3 || err "Migrate step 3 failed"
-migrate_4 || err "Migrate step 4 failed"
-migrate_5 || err "Migrate step 5 failed"
-migrate_6 || err "Migrate step 6 failed"
-dump
+#prereqs || err "Missing prerequisites"
+#restore || err "Restore failed"
+#make_safe || err "Making the DB safe failed"
+#rm_website_sale_coupon
+#migrate_0_2 || err "Migrate step 0-2 failed"
+#migrate_3 || err "Migrate step 3 failed"
+#migrate_4 || err "Migrate step 4 failed"
+#migrate_5 || err "Migrate step 5 failed"
+#migrate_6 || err "Migrate step 6 failed"
+#dump
 restore_odoo_v16
