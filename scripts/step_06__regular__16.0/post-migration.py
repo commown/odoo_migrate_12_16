@@ -49,4 +49,10 @@ affected_stages = env['project.task.type'].search([("mail_template_id", "=", dup
 affected_stages.mail_template_id = base_nps_template = env.ref("project_rating_nps.nps_rating_request_email")
 duplicated_nps_tmpl.unlink()
 
+# Ticket #44730
+label_group = env.ref("commown_shipping.group_print_label")
+role_names = ["Logistique", "Support", "Gestion des contrats", "Commercial", "Admin Odoo", "Directoire"]
+
+env["res.users.role"].search([("name", "in", role_names)]).implied_ids |= label_group
+
 env.cr.commit()
