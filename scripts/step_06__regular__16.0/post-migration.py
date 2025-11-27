@@ -37,11 +37,13 @@ env.ref("website_sale.product_share_buttons").active = False
 env['ir.ui.view'].search([("name", "in", ["phonecall.res.partner.form", "crm_phone.crm_lead.form"])]).unlink()
 
 # Ticket #43785
-duplicated_nps_tmpl = env['mail.template'].search([("name", "like", "[Commown] NPS")])
-affected_stages = env['project.task.type'].search([("mail_template_id", "=", duplicated_nps_tmpl.id)])
-
-affected_stages.mail_template_id = base_nps_template = env.ref("project_rating_nps.nps_rating_request_email")
-duplicated_nps_tmpl.unlink()
+dupl_nps_tmpl = env['mail.template'].search([("name", "like", "[Commown] NPS")])
+base_nps_tmpl = env.ref("project_rating_nps.nps_rating_request_email")
+dupl_nps_tmpl.write({
+    "body_html": base_nps_tmpl.body_html,
+    "partner_to": base_nps_tmpl.partner_to,
+    "lang": base_nps_tmpl.lang,
+})
 
 # Ticket #44730
 label_group = env.ref("commown_shipping.group_print_label")
