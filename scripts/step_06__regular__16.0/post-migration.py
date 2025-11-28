@@ -36,9 +36,12 @@ env.ref("website_sale.product_share_buttons").active = False
 # => Remove orphenated views from 12.0 module crm_phone
 env['ir.ui.view'].search([("name", "in", ["phonecall.res.partner.form", "crm_phone.crm_lead.form"])]).unlink()
 
+# Ticket #43795
+base_nps_tmpl = env.ref("project_rating_nps.nps_rating_request_email")
+base_nps_tmpl.reset_template()
+
 # Ticket #43785
 dupl_nps_tmpl = env['mail.template'].search([("name", "like", "[Commown] NPS")])
-base_nps_tmpl = env.ref("project_rating_nps.nps_rating_request_email")
 dupl_nps_tmpl.write({
     "body_html": base_nps_tmpl.body_html,
     "partner_to": base_nps_tmpl.partner_to,
