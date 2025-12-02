@@ -23,6 +23,7 @@
     merges:
         - OCA 15.0
         - commown 15.0-account_usability_akretion_rename
+        - commown 15.0-create_electronic_payment_method_lines
 
 ##############################################################################
 ## OCA
