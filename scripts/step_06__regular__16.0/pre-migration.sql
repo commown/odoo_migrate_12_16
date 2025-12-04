@@ -16,3 +16,11 @@ where id = 1; -- commown_shipping.shipping-account-colissimo-std-account
 update commown_shipping_account set tech_name = 'shipping-account-colissimo-support-account'
 where id = 2; -- commown_shipping.shipping-account-colissimo-support-account
 
+-- Ticket #45033/#
+update payment_provider
+set
+    is_published = 't',
+    module_id = (select id from ir_module_module where name='account_payment_slimpay'),
+    module_state = 'installed'
+where id = 11;
+
