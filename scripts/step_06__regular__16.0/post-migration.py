@@ -54,4 +54,8 @@ role_names = ["Logistique", "Support", "Gestion des contrats", "Commercial", "Ad
 
 env["res.users.role"].search([("name", "in", role_names)]).implied_ids |= label_group
 
+# Ticket #43988/#
+# WORK IN PROGRESS - we might create a dedicated B2B channels user in the future
+env['res.partner'].search([("is_company", "=", True), ("mail_channel_id", "!=", False)]).mapped("mail_channel_id").active = False
+
 env.cr.commit()
