@@ -52,7 +52,8 @@ dupl_nps_tmpl.write({
 label_group = env.ref("commown_shipping.group_print_label")
 role_names = ["Logistique", "Support", "Gestion des contrats", "Commercial", "Admin Odoo", "Directoire"]
 
-env["res.users.role"].search([("name", "in", role_names)]).implied_ids |= label_group
+for role in env['res.users.role'].search([('name', 'in', role_names)]):
+    role.implied_ids |= label_group
 
 # Ticket #43988/#
 # WORK IN PROGRESS - we might create a dedicated B2B channels user in the future
