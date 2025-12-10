@@ -63,4 +63,8 @@ env["mail.channel"].browse(289).active = False # Assemblée Générale
 # Ticket #45262
 env.ref("commown_user_roles.employee").implied_ids |= env.ref("base.group_allow_export")
 
+# Ticket #45022
+for cron in env['ir.cron'].search([("active", "in", (True, False)), ("model_name", "=", False)]):
+    cron.model_name = cron.model_id.name
+
 env.cr.commit()
