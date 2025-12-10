@@ -23,6 +23,6 @@ set
     module_id = (select id from ir_module_module where name='account_payment_slimpay'),
     module_state = 'installed',
     -- Ticket #45124/#
-    redirect_form_view_id = (select res_id from ir_model_data where module='website_sale_payment_slimpay' and name = 'redirect_form'),
+    redirect_form_view_id = (select res_id from ir_model_data where module='website_sale_payment_slimpay' and name = 'redirect_form')
 where id = 11;
 
