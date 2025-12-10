@@ -60,4 +60,7 @@ for role in env['res.users.role'].search([('name', 'in', role_names)]):
 env['res.partner'].search([("is_company", "=", True), ("mail_channel_id", "!=", False)]).mapped("mail_channel_id").active = False
 env["mail.channel"].browse(289).active = False # Assemblée Générale
 
+# Ticket #45262
+env.ref("commown_user_roles.employee").implied_ids |= env.ref("base.group_allow_export")
+
 env.cr.commit()
