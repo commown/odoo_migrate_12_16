@@ -56,9 +56,29 @@ for role in env['res.users.role'].search([('name', 'in', role_names)]):
     role.implied_ids |= label_group
 
 # Ticket #43988/#
-# WORK IN PROGRESS - we might create a dedicated B2B channels user in the future
-env['res.partner'].search([("is_company", "=", True), ("mail_channel_id", "!=", False)]).mapped("mail_channel_id").active = False
 env["mail.channel"].browse(289).active = False # Assemblée Générale
+b2b_chans = env["mail.channel"].search([("partner_companies", "!=", False), ("active", "=", False)])
+
+# Remove current and ex employees from the mail.channel subscribers.
+partners_domain = ["|", ("partner_id.user_ids.groups_id", "=", env.ref("base.group_user").id), ("partner_id.active", "=", False)]
+
+env["mail.channel.member"].search([("channel_id", "in", b2b_chans.ids)] + partners_domain).unlink()
+env["mail.followers"].search([("res_model", "=", "mail.channel"), ("res_id", "in", b2b_chans.ids)] + partners_domain).unlink()
+
+# Creating new Support user, and subscribing them to all B2B channels.
+with open("/env/scripts/step_06__regular__16.0/support_user.txt", "r") as f:
+    password = f.read().strip('\n')
+
+support_user = env["res.users"].create(
+    {
+        "name": "Support Commown",
+        "login": "support_commown",
+        "password": password,
+        "website_id": env.ref("website_b2b.b2b_website").id,
+    }
+)
+
+b2b_chans.add_members(partner_ids=support_user.partner_id.ids)
 
 # Ticket #45262
 env.ref("commown_user_roles.employee").implied_ids |= env.ref("base.group_allow_export")
@@ -70,5 +90,6 @@ for cron in env['ir.cron'].search([("active", "in", (True, False)), ("model_name
 # Ticket #45263
 # Recompute stored computed field rating_text, to avoid issues with rating_last_text field in rating.mixin (=> project.task)
 env['rating.rating'].search([])._compute_rating_text()
+
 
 env.cr.commit()
