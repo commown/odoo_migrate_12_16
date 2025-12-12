@@ -75,8 +75,10 @@ support_user = env["res.users"].create(
         "login": "support_commown",
         "password": password,
         "website_id": env.ref("website_b2b.b2b_website").id,
+        "role_line_ids": [(0, 0, {"role_id": env.ref("commown_user_roles.employee").id})],
     }
 )
+support_user.partner_id.parent_id = env["res.partner"].search([("name", "=", "Commown")])
 
 b2b_chans.add_members(partner_ids=support_user.partner_id.ids)
 
