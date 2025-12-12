@@ -26,3 +26,6 @@ set
     redirect_form_view_id = (select res_id from ir_model_data where module='website_sale_payment_slimpay' and name = 'redirect_form')
 where id = 11;
 
+-- Ticket #45374/#
+update account_move mv set auto_merge = inv.auto_merge from account_invoice inv where inv.id = mv.old_invoice_id;
+
