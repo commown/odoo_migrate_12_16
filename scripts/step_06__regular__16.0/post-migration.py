@@ -67,4 +67,8 @@ env.ref("commown_user_roles.employee").implied_ids |= env.ref("base.group_allow_
 for cron in env['ir.cron'].search([("active", "in", (True, False)), ("model_name", "=", False)]):
     cron.model_name = cron.model_id.name
 
+# Ticket #45263
+# Recompute stored computed field rating_text, to avoid issues with rating_last_text field in rating.mixin (=> project.task)
+env['rating.rating'].search([])._compute_rating_text()
+
 env.cr.commit()
