@@ -28,12 +28,20 @@ for server in env['fetchmail.server'].search([]):
 env.cr.commit()
 print(" Done!")
 
+# Create debugging local imap server:
+print("Creating debugging local imap server...")
+env['fetchmail.server'].create({
+    'name': 'mail-devel',
+    'state': 'done',
+    'object_id': env.ref('project.model_project_task').id,
+    })
+env.cr.commit()
+print(" Done!")
+
 # Create debugging local mail server:
 print("Creating debug mail server...")
 env['ir.mail_server'].create({
-    'name': 'mailhog',
-    'smtp_host': 'mailhog',
-    'smtp_port': '1025',
+    'name': 'mail-devel',
     'smtp_debug': True,
     })
 env.cr.commit()
@@ -66,7 +74,7 @@ env.cr.commit()
 
 # Create new mandates on Slimpay sandbox
 if osp.isfile('/tmp/mandates.json') and env['ir.module.module'].search([('name', '=', 'payment_slimpay_dump_restore_utils')]):
-    env['payment.acquirer']._slimpay_restore_mandates()
+    env['payment.provider']._slimpay_restore_mandates()
 else:
     print("!!! WARNING !!! Module payment_slimpay_dump_restore_utils not avail")
 env.cr.commit()
