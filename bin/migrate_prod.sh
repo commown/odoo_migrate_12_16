@@ -271,8 +271,8 @@ dump()
 restore_odoo_v16()
 {
   echo "Start Odoo site maintenance..."
-  mv /var/www/odoo-v16.commown.priv/maintenance.html{.rename_me,}
-  mv /var/www/pro-v16.commown.priv/maintenance.html{.rename_me,}
+  mv /var/www/odoo-v16.commown.priv/maintenance.html.rename_me /var/www/odoo-v16.commown.priv/maintenance.html
+  mv /var/www/pro-v16.commown.priv/maintenance.html.rename_me /var/www/pro-v16.commown.priv/maintenance.html
 
   echo "Restoring the migrated DB + filestore into Odoo v16 test instance..."
   docker restart odoo-v16
@@ -299,8 +299,8 @@ restore_odoo_v16()
   docker exec odoo-v16 systemctl restart odoo
 
   echo "Stop Odoo site maintenance..."
-  mv /var/www/pro-v16.commown.priv/maintenance.html{,.rename_me}
-  mv /var/www/pro-v16.commown.priv/maintenance.html{,.rename_me}
+  mv /var/www/odoo-v16.commown.priv/maintenance.html /var/www/odoo-v16.commown.priv/maintenance.html.rename_me
+  mv /var/www/pro-v16.commown.priv/maintenance.html /var/www/pro-v16.commown.priv/maintenance.html.rename_me
 }
 
 #prereqs || err "Missing prerequisites"
