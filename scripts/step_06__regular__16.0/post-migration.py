@@ -25,8 +25,14 @@ env.cr.execute(
 )
 
 
-# Ticket #43648
-env['ir.module.module'].search([("name", "=", "account_analytic_tag")]).button_immediate_install()
+# Modules installation related to various tickets
+module_names = [
+    "account_analytic_tag", # Ticket 43648
+    "account_reconcile_oca", # Ticket 44968
+]
+
+for module in env['ir.module.module'].search([("name", "in", module_names)]):
+    module.button_immediate_install()
 
 # Ticket #40262
 env.ref('website_sale.product_custom_text').active = False
