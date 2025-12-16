@@ -28,7 +28,8 @@ env.cr.execute(
 # Modules installation related to various tickets
 module_names = [
     "account_analytic_tag", # Ticket 43648
-    "account_reconcile_oca", # Ticket 44968
+    "account_move_line_reconcile_manual", # Ticket 44968
+    "account_reconcile_oca",
 ]
 
 for module in env['ir.module.module'].search([("name", "in", module_names)]):
