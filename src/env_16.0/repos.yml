@@ -299,13 +299,13 @@
     - OCA 16.0
 
 ./src/web:
-  defaults:
-    depth: 1
   remotes:
     OCA: https://github.com/OCA/web
+    commown: https://github.com/commown/web
   target: OCA 16.0-current
   merges:
     - OCA 16.0
+    - commown 16.0-fix-web_group_by_percentage-exclude_non_field_columns
 
 ./src/website:
   remotes:
