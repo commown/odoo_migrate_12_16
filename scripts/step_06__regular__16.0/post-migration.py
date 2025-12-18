@@ -102,3 +102,7 @@ env['rating.rating'].search([])._compute_rating_text()
 
 
 env.cr.commit()
+
+# Uninstall unported modules
+unported_modules = env['ir.module.module'].search([('name', 'in', ['account_invoice_view_payment', 'commown_lineageos', 'crm_phone', 'mass_operation_abstract'])])
+unported_modules.button_immediate_uninstall()
