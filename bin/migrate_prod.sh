@@ -31,6 +31,12 @@ rm_website_sale_coupon()
   rm -rf "$ODOO_MIGRATE_DIR"/src/*/src/openupgrade/openupgrade_scripts/scripts/website_sale_coupon
 }
 
+rm_pt_files()
+{
+  echo "Removing product.template,website_description files from previous migration..."
+  rm "$ODOO_MIGRATE_DIR"/pt_*.txt
+}
+
 odoo_addons()
 {
     sep=""
@@ -307,6 +313,7 @@ restore_odoo_v16()
 #restore || err "Restore failed"
 #make_safe || err "Making the DB safe failed"
 #rm_website_sale_coupon
+#rm_pt_files
 #migrate_0_2 || err "Migrate step 0-2 failed"
 #migrate_3 || err "Migrate step 3 failed"
 #migrate_4 || err "Migrate step 4 failed"

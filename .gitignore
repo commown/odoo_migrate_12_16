@@ -3,3 +3,4 @@ filestore/
 log/
 src/env_1*.0/log/
 scripts/step_06__regular__16.0/support_user.txt
+pt_*.txt
