@@ -34,7 +34,7 @@ rm_website_sale_coupon()
 rm_pt_files()
 {
   echo "Removing product.template,website_description files from previous migration..."
-  rm "$ODOO_MIGRATE_DIR"/pt_*.txt
+  rm -f "$ODOO_MIGRATE_DIR"/pt_*.txt
 }
 
 odoo_addons()
