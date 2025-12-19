@@ -124,6 +124,7 @@
     - OCA 16.0
     - commown 16.0-imp-contract_forecast-factor-out-jobs-creation
     - commown 16.0-imp-contract_forecast-allow-create-delete-cline-in-same-transaction
+    - commown 16.0-fix-contract_forecast-setting-view-fields-without-o_setting_box
 
 ./src/crm:
   remotes:
