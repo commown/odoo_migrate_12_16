@@ -57,3 +57,7 @@ WHERE module='commown' and name='reconcile_method_simple_partner_custom';
 
 -- Ticket #40337
 DELETE from ir_actions WHERE id=460;
+
+-- Ticket #45564
+UPDATE ir_model_fields SET translate='t'
+WHERE (model='product.template' AND name='sale_line_warn_msg') OR (model='website' AND name='name');
