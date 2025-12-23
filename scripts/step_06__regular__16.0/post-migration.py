@@ -100,6 +100,14 @@ for cron in env['ir.cron'].search([("active", "in", (True, False)), ("model_name
 # Recompute stored computed field rating_text, to avoid issues with rating_last_text field in rating.mixin (=> project.task)
 env['rating.rating'].search([])._compute_rating_text()
 
+# Ticket #44773
+slimpay_apml = env['account.payment.method.line'].search([('code', '=', 'slimpay')])
+slimpay_apml.payment_provider_id = env.ref("account_payment_slimpay.payment_provider_slimpay")
+
+slimpay_journal = env['account.journal'].search([("name", "like", "Règlements % Slimpay")])
+slimpay_journal.inbound_payment_method_line_ids |= slimpay_apml.filtered(lambda apml: apml.payment_type == "inbound")
+slimpay_journal.outbound_payment_method_line_ids |= slimpay_apml.filtered(lambda apml: apml.payment_type == "outbound")
+
 
 env.cr.commit()
 
