@@ -11,4 +11,7 @@ for pt in env['product.template'].search([("website_description", "!=", False)])
     with open(f"/env/pt_{pt.id}_{lang}.txt", "w") as f:
       f.write(pt.with_context(lang=lang).website_description)
 
+# Ticket #45719
+env.ref("sales_team.salesteam_website_sales").use_opportunities = True
+
 env.cr.commit()
