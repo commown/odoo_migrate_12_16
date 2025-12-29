@@ -7,6 +7,11 @@ env = env  # noqa: F821
 
 # Write custom script here
 
+def new_ref(module, name, model, res_id, **kwargs):
+    kwargs.update({"module": module, "name": name, "model": model, "res_id": res_id})
+    return env["ir.model.data"].create(kwargs)
+
+
 # Ticket 39426
 env.ref("website.default_website").update(
     {
@@ -19,7 +24,7 @@ env.ref("website.default_website").update(
 )
 env.cr.execute(
     """UPDATE website
-    SET recaptcha_v2_site_key = recaptcha_key_site, 
+    SET recaptcha_v2_site_key = recaptcha_key_site,
     recaptcha_v2_secret_key = recaptcha_key_secret
     """
 )
@@ -108,6 +113,21 @@ slimpay_journal = env['account.journal'].search([("name", "like", "Règlements %
 slimpay_journal.inbound_payment_method_line_ids |= slimpay_apml.filtered(lambda apml: apml.payment_type == "inbound")
 slimpay_journal.outbound_payment_method_line_ids |= slimpay_apml.filtered(lambda apml: apml.payment_type == "outbound")
 
+# Ticket #45766
+
+# - This reference not exist any longer in v16 module:
+env.ref("payment_slimpay_issue.smspro_payment_issue").unlink()
+# - Following have forcecreate=false but still exist
+#   > Frais de gestion rejet de prélèvement:
+new_ref("payment_slimpay_issue", "management_fees_product", "product.template", 65, noupdate=True)
+#   > Frais bancaire de rejet de prélèvement:
+new_ref("payment_slimpay_issue", "bank_fees_product", "product.template", 150, noupdate=True)
+#   > Frais bancaires sans taxes (pour impayés):
+new_ref("payment_slimpay_issue", "bank_supplier_fees_product", "product.template", 188, noupdate=True)
+
+# Remove data from old module commown_payment_slimpay_issue:
+# (note there are 2 references to the same data, all will be removed by this line)
+env.ref("commown_payment_slimpay_issue.action_send_payment_issue_sms").unlink()
 
 env.cr.commit()
 

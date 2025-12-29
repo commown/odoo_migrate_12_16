@@ -4,7 +4,7 @@ delete from ir_ui_view where name='crm.phone.res.users.form';
 
 -- Ticket #43988/#
 -- Written by Florent Cayre
-update mail_channel C set channel_type='channel' 
+update mail_channel C set channel_type='channel'
 where exists(
     select 1 from res_partner P where P.mail_channel_id = C.id
 );
@@ -29,3 +29,9 @@ where id = 11;
 -- Ticket #45374/#
 update account_move mv set auto_merge = inv.auto_merge from account_invoice inv where inv.id = mv.old_invoice_id;
 
+
+# Ticket #45766
+# - This email has been added to the code with its FR and DE t10ns
+#   so it is simpler remove it before the module update:
+delete from ir_model_data where module='payment_slimpay_issue' and name='mail_warn_user';
+delete from mail_template where name->>'en_US'='Warn partner of a payment issue';
