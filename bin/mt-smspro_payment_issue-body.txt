@@ -1,0 +1,7 @@
+<div style="font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;">
+%if object.invoice_unpaid_count in (0, 1):
+<p style="font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;margin:0px 0px 9px 0px;">Le prélèvement de votre dernière mensualité a été rejeté =&gt; Infos par mail (pensez à consulter vos spams).</p><p style="font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;margin:0px 0px 9px 0px;">--</p><p style="font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;margin:0px 0px 9px 0px;">L'équipe Commown - contact@commown.coop</p>
+%else:
+<p style="font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;margin:0px 0px 9px 0px;">RAPPEL : Rejet de prélèvement de mensualité =&gt; Contactez-nous d'urgence svp.</p><p style="font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;margin:0px 0px 9px 0px;">--</p><p style="font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;margin:0px 0px 9px 0px;">L'équipe Commown - contact@commown.coop</p>
+%endif
+</div>
