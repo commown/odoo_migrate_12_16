@@ -21,9 +21,6 @@ UPDATE ir_model_data SET module='commown_support'
 WHERE module='commown' AND NAME= 'mail_template_issue_reminder';
 
 UPDATE ir_model_data SET module='commown_support'
-WHERE module='commown' AND NAME= 'sms_template_issue_reminder';
-
-UPDATE ir_model_data SET module='commown_support'
 WHERE module='commown_self_troubleshooting' AND NAME= 'support_project';
 
 UPDATE ir_model_data SET module='commown_support'
@@ -61,3 +58,23 @@ DELETE from ir_actions WHERE id=460;
 -- Ticket #45564
 UPDATE ir_model_fields SET translate='t'
 WHERE (model='product.template' AND name='sale_line_warn_msg') OR (model='website' AND name='name');
+
+-- Ticket #45766
+-- Replaced by commown_support sms.template record 
+DELETE FROM mail_template
+WHERE id = (
+    SELECT res_id FROM ir_model_data
+    WHERE module='commown' AND NAME ='sms_template_issue_reminder'
+);
+
+DELETE FROM ir_model_data
+WHERE module='commown' AND NAME = 'sms_template_issue_reminder';
+
+-- Replaced by commown_administrative_docs sms.template record 
+DELETE FROM mail_template 
+WHERE id = (
+    SELECT res_id FROM ir_model_data
+    WHERE module='commown' AND NAME ='sms_template_lead_doc_reminder'
+);
+DELETE FROM ir_model_data
+WHERE module='commown' AND NAME ='sms_template_lead_doc_reminder';
