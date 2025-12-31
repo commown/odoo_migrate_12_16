@@ -147,6 +147,10 @@ copy_t10n_to_t10n(env['mail.template'].browse(340), "body_html", "fr_FR", "en_US
 replace_str_in_field(env['mail.template'].browse(406), "body_html", "en_US", "object.user_id", "object.user_ids and object.user_ids[0]")
 replace_str_in_field(env['mail.template'].browse(406), "body_html", "de_DE", "object.user_id", "object.user_ids and object.user_ids[0]")
 
+# Remove outdated mail templates linked to contract emails generators
+outdated_tmpls_ids = [148, 173, 151, 184]
+env['mail.template'].browse(outdated_tmpls_ids).exists().active = False
+
 env.cr.commit()
 
 # Uninstall unported modules
