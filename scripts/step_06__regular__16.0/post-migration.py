@@ -11,6 +11,13 @@ def new_ref(module, name, model, res_id, **kwargs):
     kwargs.update({"module": module, "name": name, "model": model, "res_id": res_id})
     return env["ir.model.data"].create(kwargs)
 
+# mail.template helpers
+def copy_t10n_to_t10n(obj, field, orig_lang, target_lang):
+    obj.with_context(lang=target_lang)[field] = obj.with_context(lang=orig_lang)[field]
+
+def replace_str_in_field(obj, field, lang, origin_str, target_str):
+    obj.with_context(lang=lang)[field] = obj.with_context(lang=lang)[field].replace(origin_str, target_str)
+
 
 # Ticket 39426
 env.ref("website.default_website").update(
@@ -59,6 +66,8 @@ dupl_nps_tmpl.write({
     "partner_to": base_nps_tmpl.partner_to,
     "lang": base_nps_tmpl.lang,
 })
+copy_t10n_to_t10n(dupl_nps_tmpl, "body_html", "fr_FR", "de_DE")
+copy_t10n_to_t10n(dupl_nps_tmpl, "body_html", "fr_FR", "en_US")
 
 # Ticket #44730
 label_group = env.ref("commown_shipping.group_print_label")
@@ -128,6 +137,15 @@ new_ref("payment_slimpay_issue", "bank_supplier_fees_product", "product.template
 # Remove data from old module commown_payment_slimpay_issue:
 # (note there are 2 references to the same data, all will be removed by this line)
 env.ref("commown_payment_slimpay_issue.action_send_payment_issue_sms").unlink()
+
+# General user created template modifications.
+# - urban_mine templates
+copy_t10n_to_t10n(env['mail.template'].browse(278), "body_html", "fr_FR", "en_US")
+copy_t10n_to_t10n(env['mail.template'].browse(340), "body_html", "fr_FR", "en_US")
+
+# - 'user_id' -> 'user_ids[0]'
+replace_str_in_field(env['mail.template'].browse(406), "body_html", "en_US", "object.user_id", "object.user_ids and object.user_ids[0]")
+replace_str_in_field(env['mail.template'].browse(406), "body_html", "de_DE", "object.user_id", "object.user_ids and object.user_ids[0]")
 
 env.cr.commit()
 
