@@ -12,11 +12,13 @@ def new_ref(module, name, model, res_id, **kwargs):
     return env["ir.model.data"].create(kwargs)
 
 # mail.template helpers
-def copy_t10n_to_t10n(obj, field, orig_lang, target_lang):
-    obj.with_context(lang=target_lang)[field] = obj.with_context(lang=orig_lang)[field]
+def copy_t10n_to_t10n(obj_recordset, field, orig_lang, target_lang):
+    for obj in obj_recordset:
+        obj.with_context(lang=target_lang)[field] = obj.with_context(lang=orig_lang)[field]
 
-def replace_str_in_field(obj, field, lang, origin_str, target_str):
-    obj.with_context(lang=lang)[field] = obj.with_context(lang=lang)[field].replace(origin_str, target_str)
+def replace_str_in_field(obj_recordset, field, lang, origin_str, target_str):
+    for obj in obj_recordset:
+        obj.with_context(lang=lang)[field] = obj.with_context(lang=lang)[field].replace(origin_str, target_str)
 
 
 # Ticket 39426
@@ -150,6 +152,32 @@ replace_str_in_field(env['mail.template'].browse(406), "body_html", "de_DE", "ob
 # Remove outdated mail templates linked to contract emails generators
 outdated_tmpls_ids = [148, 173, 151, 184]
 env['mail.template'].browse(outdated_tmpls_ids).exists().active = False
+
+# Ticket #45098
+v16_ko_filters = env['ir.filters'].search([("active", "=", False)])
+
+def filter_replace_str(filters, model, origin_str, target_str):
+    affected_filters = filters.filtered(lambda f: f.model_id == model and origin_str in f.domain)
+    replace_str_in_field(affected_filters, "domain", "fr_FR", origin_str, target_str)
+
+filter_replace_str(v16_ko_filters, "account.move", "dummy_account_id", "line_ids.account_id")
+filter_replace_str(v16_ko_filters, "account.move", "reference", "payment_reference")
+filter_replace_str(v16_ko_filters, "account.move", "tax_line_ids", "invoice_line_ids.tax_ids")
+filter_replace_str(v16_ko_filters, "account.move", '("state", "=", "paid")', '("payment_state", "=", "paid")')
+filter_replace_str(v16_ko_filters, "account.move", "'open'", '"posted"')
+filter_replace_str(v16_ko_filters, "account.move", '"open"', '"posted"')
+
+filter_replace_str(v16_ko_filters, "contract.contract", '"TODAY"', 'context_today().strftime("%Y-%m-%d")')
+filter_replace_str(v16_ko_filters, "contract.contract", "'TODAY'", 'context_today().strftime("%Y-%m-%d")')
+
+filter_replace_str(v16_ko_filters, "crm.lead", '"TODAY"', 'context_today().strftime("%Y-%m-%d")')
+
+filter_replace_str(v16_ko_filters, "project.task", "user_id", "user_ids")
+
+filter_replace_str(v16_ko_filters, "res.partner", "customer", "customer_rank")
+filter_replace_str(v16_ko_filters, "res.users", "customer", "customer_rank")
+
+v16_ko_filters.active = True
 
 env.cr.commit()
 
