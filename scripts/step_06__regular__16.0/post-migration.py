@@ -154,7 +154,11 @@ outdated_tmpls_ids = [148, 173, 151, 184]
 env['mail.template'].browse(outdated_tmpls_ids).exists().active = False
 
 # Ticket #45098
-v16_ko_filters = env['ir.filters'].search([("active", "=", False)])
+with open("/env/scripts/step_06__regular__16.0/v12_inactive_filter_ids.txt", "r") as f:
+    # Filter out filters already inactive in v12
+    v12_inactive_filter_ids = list(map(int, f.read().split()))
+
+v16_ko_filters = env['ir.filters'].search([("active", "=", False), ("id", "not in", v12_inactive_filter_ids)])
 
 def filter_replace_str(filters, model, origin_str, target_str):
     affected_filters = filters.filtered(lambda f: f.model_id == model and origin_str in f.domain)
