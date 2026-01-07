@@ -188,6 +188,13 @@ filter_replace_str(v16_ko_filters, "res.users", "customer", "customer_rank")
 
 v16_ko_filters.active = True
 
+# Ticket #46100
+# Re-add after-sale tags to stage names, and reset the timed automated actions.
+env.ref("commown_support.stage_pending").with_context(lang="en_US").name += " [after-sale: pending]"
+env.ref("commown_support.stage_long_term_followup").with_context(lang="en_US").name += " [after-sale: manual]"
+
+env["base.automation"].search([("action_server_id", "=", env.ref("commown_support.action_move_issue_to_stop_waiting_stage").id)]).last_run = False
+
 env.cr.commit()
 
 # Uninstall unported modules
