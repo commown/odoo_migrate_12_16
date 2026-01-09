@@ -128,13 +128,6 @@ slimpay_journal.outbound_payment_method_line_ids |= slimpay_apml.filtered(lambda
 
 # - This reference not exist any longer in v16 module:
 env.ref("payment_slimpay_issue.smspro_payment_issue").unlink()
-# - Following have forcecreate=false but still exist
-#   > Frais de gestion rejet de prélèvement:
-new_ref("payment_slimpay_issue", "management_fees_product", "product.template", 65, noupdate=True)
-#   > Frais bancaire de rejet de prélèvement:
-new_ref("payment_slimpay_issue", "bank_fees_product", "product.template", 150, noupdate=True)
-#   > Frais bancaires sans taxes (pour impayés):
-new_ref("payment_slimpay_issue", "bank_supplier_fees_product", "product.template", 188, noupdate=True)
 
 # Remove data from old module commown_payment_slimpay_issue:
 # (note there are 2 references to the same data, all will be removed by this line)
