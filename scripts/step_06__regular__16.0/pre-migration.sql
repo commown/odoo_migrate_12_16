@@ -26,10 +26,6 @@ set
     redirect_form_view_id = (select res_id from ir_model_data where module='website_sale_payment_slimpay' and name = 'redirect_form')
 where id = 11;
 
--- Ticket #45374/#
-update account_move mv set auto_merge = inv.auto_merge from account_invoice inv where inv.id = mv.old_invoice_id;
-
-
 # Ticket #45766
 # - This email has been added to the code with its FR and DE t10ns
 #   so it is simpler remove it before the module update:
