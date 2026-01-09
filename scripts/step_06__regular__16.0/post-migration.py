@@ -156,7 +156,7 @@ env['mail.template'].browse(outdated_tmpls_ids).exists().active = False
 # Ticket #45098
 with open("/env/scripts/step_06__regular__16.0/outdated_filter_ids.txt", "r") as f:
     # Remove filters deemed ununsed by our users
-    outdated_filter_ids = list(map(int, f.read().strip()))
+    outdated_filter_ids = list(map(int, f.read().split()))
     env["ir.filters"].browse(outdated_filter_ids).exists().unlink()
 
 with open("/env/scripts/step_06__regular__16.0/v12_inactive_filter_ids.txt", "r") as f:
