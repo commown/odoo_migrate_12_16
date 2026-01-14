@@ -181,6 +181,27 @@ filter_replace_str(v16_ko_filters, "res.users", "customer", "customer_rank")
 
 v16_ko_filters.active = True
 
+# Assign new actions to filters with outdated actions
+action_equivalences = {
+    210: "account.action_move_out_invoice_type",
+    1053: "account.action_move_out_invoice_type",
+    173: "account.action_account_moves_all",
+    362: "crm.crm_lead_action_pipeline",
+    363: "crm.crm_lead_action_my_activities",
+    399: "mass_mailing.mailing_mailing_action_mail",
+    133: False, # "sales_team.crm_team_action_pipeline" / "sales_team.crm_team_action_sales"
+    699: "stock.dashboard_open_quants",
+    701: False, # "stock.action_change_product_quantity" / a custom action in action_open_quants
+}
+
+for outdated_action_id, new_action_xml_id in action_equivalences.items():
+    if new_action_xml_id:
+        new_action = env.ref(new_action_xml_id).id
+    else:
+        new_action = False
+
+    env["ir.filters"].search([("action_id", "=", outdated_action_id)]).action_id = new_action
+
 # Ticket #46100
 # Re-add after-sale tags to stage names, and reset the timed automated actions.
 env.ref("commown_support.stage_pending").with_context(lang="en_US").name += " [after-sale: pending]"
