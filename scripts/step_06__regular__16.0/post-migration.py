@@ -98,12 +98,18 @@ support_user = env["res.users"].create(
         "login": "support_commown",
         "password": password,
         "website_id": env.ref("website_b2b.b2b_website").id,
-        "role_line_ids": [(0, 0, {"role_id": env.ref("commown_user_roles.employee").id})],
+        "role_line_ids": [
+            (0, 0, {"role_id": env.ref("commown_user_roles.employee").id}),
+            (0, 0, {"role_id": env.ref("commown_b2b_mail_channel.role_b2b_channels").id}),
+        ],
     }
 )
 support_user.partner_id.parent_id = env["res.partner"].search([("name", "=", "Commown")])
 
 b2b_chans.add_members(partner_ids=support_user.partner_id.ids)
+
+# Set B2B chans. auto-subscribe roles to new B2B channel role
+env.ref("commown_b2b_mail_channel.roles_subscribed_to_support_chan").value = "commown_b2b_mail_channel.role_b2b_channels"
 
 # Ticket #45262
 env.ref("commown_user_roles.employee").implied_ids |= env.ref("base.group_allow_export")
