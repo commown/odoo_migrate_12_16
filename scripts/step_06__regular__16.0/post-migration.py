@@ -190,7 +190,7 @@ v16_ko_filters.active = True
 # Assign new actions to filters with outdated actions
 action_equivalences = {
     210: "account.action_move_out_invoice_type",
-    1053: "account.action_move_out_invoice_type",
+    1053: "account.action_move_in_invoice_type",
     173: "account.action_account_moves_all",
     362: "crm.crm_lead_action_pipeline",
     363: "crm.crm_lead_action_my_activities",
