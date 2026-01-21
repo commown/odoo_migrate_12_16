@@ -20,4 +20,7 @@ env['ir.translation'].search(
   ]
 ).state = "translated"
 
+# Ticket #45090
+env["account.bank.statement.line"]._compute_is_reconciled()
+
 env.cr.commit()
