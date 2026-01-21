@@ -215,6 +215,10 @@ env.ref("commown_support.stage_long_term_followup").with_context(lang="en_US").n
 
 env["base.automation"].search([("action_server_id", "=", env.ref("commown_support.action_move_issue_to_stop_waiting_stage").id)]).last_run = False
 
+# Ticket #45680
+ctm_rule = env.ref("customer_team_manager.res_partner_customer_user_rule")
+ctm_rule.domain_force = ctm_rule.domain_force.replace("'id', 'child_of'", "'parent_id', '='")
+
 env.cr.commit()
 
 # Uninstall unported modules
