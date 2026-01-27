@@ -26,9 +26,9 @@ set
     redirect_form_view_id = (select res_id from ir_model_data where module='website_sale_payment_slimpay' and name = 'redirect_form')
 where id = 11;
 
-# Ticket #45766
-# - This email has been added to the code with its FR and DE t10ns
-#   so it is simpler remove it before the module update:
+-- Ticket #45766
+-- - This email has been added to the code with its FR and DE t10ns
+--   so it is simpler remove it before the module update:
 delete from ir_model_data where module='payment_slimpay_issue' and name='mail_warn_user';
 delete from mail_template where name->>'en_US'='Warn partner of a payment issue';
 
