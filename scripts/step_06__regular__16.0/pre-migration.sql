@@ -31,3 +31,7 @@ where id = 11;
 #   so it is simpler remove it before the module update:
 delete from ir_model_data where module='payment_slimpay_issue' and name='mail_warn_user';
 delete from mail_template where name->>'en_US'='Warn partner of a payment issue';
+
+-- Ticket #44699/#
+UPDATE account_account SET code = REPLACE(code, '-', '.') WHERE code LIKE '%-%';
+
