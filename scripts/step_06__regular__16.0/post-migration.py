@@ -79,8 +79,8 @@ for role in env['res.users.role'].search([('name', 'in', role_names)]):
     role.implied_ids |= label_group
 
 # Ticket #43988/#
-env["mail.channel"].browse(289).active = False # Assemblée Générale
 b2b_chans = env["mail.channel"].search([("partner_companies", "!=", False)])
+b2b_chans += env["mail.channel"].browse(289) # Assemblée Générale
 
 # Remove current and ex employees from the mail.channel subscribers.
 partners_domain = ["|", ("partner_id.user_ids.groups_id", "=", env.ref("base.group_user").id), ("partner_id.active", "=", False)]
