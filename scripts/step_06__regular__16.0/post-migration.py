@@ -1,3 +1,4 @@
+from openupgradelib import openupgrade
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -120,7 +121,17 @@ for cron in env['ir.cron'].search([("active", "in", (True, False)), ("model_name
 
 # Ticket #45263
 # Recompute stored computed field rating_text, to avoid issues with rating_last_text field in rating.mixin (=> project.task)
-env['rating.rating'].search([])._compute_rating_text()
+openupgrade.logged_query(
+    env.cr,
+    """
+        UPDATE rating_rating
+        SET rating_text = CASE
+            WHEN rating >= 9 THEN 'promoter'
+            WHEN rating <= 6 THEN 'detractor'
+            ELSE 'neutral'
+        END;
+    """,
+)
 
 # Ticket #44773
 slimpay_apml = env['account.payment.method.line'].search([('code', '=', 'slimpay')])
