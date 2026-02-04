@@ -209,6 +209,7 @@ action_equivalences = {
     133: False, # "sales_team.crm_team_action_pipeline" / "sales_team.crm_team_action_sales"
     699: "stock.dashboard_open_quants",
     701: False, # "stock.action_change_product_quantity" / a custom action in action_open_quants
+    1063: "account_asset_management.action_account_asset_report",
 }
 
 for outdated_action_id, new_action_xml_id in action_equivalences.items():
