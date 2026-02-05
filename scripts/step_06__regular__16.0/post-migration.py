@@ -232,6 +232,53 @@ env["base.automation"].search([("action_server_id", "=", env.ref("commown_suppor
 ctm_rule = env.ref("customer_team_manager.res_partner_customer_user_rule")
 ctm_rule.domain_force = ctm_rule.domain_force.replace("'id', 'child_of'", "'parent_id', '='")
 
+# Ticket #44958
+kpi_migration = {
+    "commown_expenses": {"weight": 2},
+    "commown_turnover": {"weight": 1},
+    "commown_turnover_cumulated": {"weight": 2},
+    "commown_customer_fidelity": {"weight": 2}
+}
+sql_views = env["bi.sql.view"].search([]).sorted(lambda v: kpi_migration.get(v.technical_name, {}).get("weight", 0), reverse=True)
+
+env.cr.execute("SELECT matviewname FROM pg_matviews")
+sql_mat_views = set(l[0] for l in env.cr.fetchall())
+
+for sql_view in sql_views:
+    # Build new KPI SQL create values
+    with open(f"/env/odoo-commown-kpi-sql-views/{sql_view.technical_name}.sql", "r") as f:
+        query = f.read()
+
+    # Drop materialized view/table
+    view_name = f"x_bi_sql_view_{sql_view.technical_name}"
+    if view_name in sql_mat_views:
+        env.cr.execute("DROP MATERIALIZED VIEW IF EXISTS %s" % view_name)
+    else:
+        env.cr.execute("DROP TABLE IF EXISTS %s" % view_name)
+
+    # Set view back to draft
+    sql_view.button_reset_to_model_valid()
+    sql_view.button_reset_to_sql_valid()
+    sql_view.button_set_draft()
+
+    # Set new query / reset query
+    sql_view.query = query
+    sql_view.button_validate_sql_expression()
+
+    # Setup new field
+    if sql_view.technical_name == "commown_order_by_product":
+        sql_view.bi_sql_view_field_ids.filtered(lambda f: f.name == "x_market").write({
+            "field_description": "Marché",
+            "graph_type": "col",
+            "is_index": True,
+            "is_group_by": True,
+        })
+
+    sql_view.button_create_sql_view_and_model()
+    sql_view.flush_recordset()
+    sql_view.button_create_ui()
+
+
 env.cr.commit()
 
 # Uninstall unported modules
