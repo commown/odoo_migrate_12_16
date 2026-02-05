@@ -103,6 +103,7 @@ support_user = env["res.users"].create(
             (0, 0, {"role_id": env.ref("commown_user_roles.employee").id}),
             (0, 0, {"role_id": env.ref("commown_b2b_mail_channel.role_b2b_channels").id}),
         ],
+        "notification_type": "inbox",
     }
 )
 support_user.partner_id.parent_id = env["res.partner"].search([("name", "=", "Commown")])
