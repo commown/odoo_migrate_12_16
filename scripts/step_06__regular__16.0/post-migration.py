@@ -278,6 +278,29 @@ for sql_view in sql_views:
     sql_view.flush_recordset()
     sql_view.button_create_ui()
 
+# Ticket #44777
+env["account.statement.import.sheet.mapping"].search([("name", "=", "Crédit Coopératif")]).write(
+    {
+        "header_lines_skip_count": 5,
+        "footer_lines_skip_count": 1,
+        "amount_type": "distinct_credit_debit",
+        "amount_debit_column": "Débit",
+        "amount_credit_column": "Crédit",
+        "amount_inverse_sign": True,
+    }
+)
+
+env["account.statement.import.sheet.mapping"].search([("name", "=", "La Nef")]).write(
+    {
+        "amount_type": "distinct_credit_debit",
+        "amount_debit_column": "Débit",
+        "amount_credit_column": "Crédit",
+        "amount_inverse_sign": True,
+        "description_column": "Libellé de la dépense",
+        "notes_column": "Type de dépense",
+        "reference_column": False,
+    }
+)
 
 env.cr.commit()
 
