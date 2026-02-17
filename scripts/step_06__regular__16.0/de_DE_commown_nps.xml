@@ -1,0 +1,96 @@
+<div>
+    <t t-set="access_token" t-value="object._rating_get_access_token()"></t>
+    <t t-set="partner" t-value="object._rating_get_partner()"></t>
+  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="box-sizing:border-box;border-collapse:collapse;caption-side:bottom;width:100%; margin:0px auto;">
+    <tbody style="border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;">
+      <tr style="border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;"><td valign="top" style="border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;font-size: 13px;"><t t-if="partner.name">Hallo <t t-out="partner.name or ''" tc-textcontent="true" data-tc-id="w-0.6021453741665289">Brandon Freeman</t>,<br><br>
+        </t>
+        <t t-else="">
+          Hello,<br><br></t>bitte nehmen Sie sich einen Moment Zeit, um unsere Leistungen im Zusammenhang mit der Aufgabe 
+
+&nbsp;	"<strong t-out="object.name or ''" style="box-sizing:border-box;font-weight:bolder;" tc-textcontent="true" data-tc-id="w-0.5896541291841663">Planning and budget</strong>"
+<t t-if="object._rating_get_operator().name">die&nbsp;<strong t-out="object._rating_get_operator().name or ''" style="box-sizing:border-box;font-weight:bolder;" tc-textcontent="true" data-tc-id="w-0.4949307003440587">Mitchell Admin</strong>&nbsp;
+zugewiesen ist, zu bewerten.<br><em></em><strong style="box-sizing:border-box;font-weight:bolder;"><em><br><br>Hinweis:</em></strong><em> Um die Antworten nicht zu verfälschen, beachten Sie bitte, dass sich diese Umfrage nicht auf die Zufriedenheit mit gemieteten Geräten oder anderen laufenden Supportanfragen bezieht, sondern ausschließlich auf das in diesem Ticket behandelte Anliegen. Für andere Themen (insbesondere am Ende des Vertrags für die Geräte) erhalten Sie separate Umfragen.&nbsp;</em><br>
+</t><t t-else="">.<br>
+        </t>
+      </td></tr>
+      <tr style="border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;"><td style="border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;text-align: center;">
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" summary="o_mail_notification" style="box-sizing: border-box; border-collapse: collapse; caption-side: bottom; width: 100%; margin: 32px 0px; text-align: center;">
+          <tbody style="border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;"><tr style="border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;"><td style="border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;font-size: 13px;">
+            <strong style="box-sizing:border-box;font-weight:bolder;">
+Wie wahrscheinlich ist es, dass Sie uns einem Freund oder Kollegen weiterempfehlen würden?&nbsp;</strong><br>
+
+(Klicken Sie auf eines der Smileys.)
+
+</td></tr>
+          <tr style="border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;"><td style="border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;font-size: 13px;">
+            <table style="margin: 24px 0px 0px; box-sizing: border-box; border-collapse: collapse; caption-side: bottom; width: 100%; text-align: center; font-size: 13px;" width="100%">
+              <tbody style="border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;"><tr style="border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;">
+                <td style="border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;padding:10px 10px;">
+                  <a t-attf-href="/rate/{{ access_token }}/0" style="text-decoration: none; box-sizing: border-box; color: #495057;">
+                    <img alt="0/10" src="/project_rating_nps/static/src/img/rate_0.png" style="box-sizing: border-box; vertical-align: middle; width: 32px; height: 32px;" width="32" height="32">
+                  </a>
+                </td>
+                <td style="border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;padding:10px 10px;">
+                  <a t-attf-href="/rate/{{ access_token }}/1" style="text-decoration: none; box-sizing: border-box; color: #495057;">
+                    <img alt="1/10" src="/project_rating_nps/static/src/img/rate_1.png" style="box-sizing: border-box; vertical-align: middle; width: 32px; height: 32px;" width="32" height="32">
+                  </a>
+                </td>
+                <td style="border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;padding:10px 10px;">
+                  <a t-attf-href="/rate/{{ access_token }}/2" style="text-decoration: none; box-sizing: border-box; color: #495057;">
+                    <img alt="2/10" src="/project_rating_nps/static/src/img/rate_2.png" style="box-sizing: border-box; vertical-align: middle; width: 32px; height: 32px;" width="32" height="32">
+                  </a>
+                </td>
+                <td style="border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;padding:10px 10px;">
+                  <a t-attf-href="/rate/{{ access_token }}/3" style="text-decoration: none; box-sizing: border-box; color: #495057;">
+                    <img alt="3/10" src="/project_rating_nps/static/src/img/rate_3.png" style="box-sizing: border-box; vertical-align: middle; width: 32px; height: 32px;" width="32" height="32">
+                  </a>
+                </td>
+                <td style="border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;padding:10px 10px;">
+                  <a t-attf-href="/rate/{{ access_token }}/4" style="text-decoration: none; box-sizing: border-box; color: #495057;">
+                    <img alt="4/10" src="/project_rating_nps/static/src/img/rate_4.png" style="box-sizing: border-box; vertical-align: middle; width: 32px; height: 32px;" width="32" height="32">
+                  </a>
+                </td>
+                <td style="border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;padding:10px 10px;">
+                  <a t-attf-href="/rate/{{ access_token }}/5" style="text-decoration: none; box-sizing: border-box; color: #495057;">
+                    <img alt="5/10" src="/project_rating_nps/static/src/img/rate_5.png" style="box-sizing: border-box; vertical-align: middle; width: 32px; height: 32px;" width="32" height="32">
+                  </a>
+                </td>
+                <td style="border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;padding:10px 10px;">
+                  <a t-attf-href="/rate/{{ access_token }}/6" style="text-decoration: none; box-sizing: border-box; color: #495057;">
+                    <img alt="6/10" src="/project_rating_nps/static/src/img/rate_6.png" style="box-sizing: border-box; vertical-align: middle; width: 32px; height: 32px;" width="32" height="32">
+                  </a>
+                </td>
+                <td style="border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;padding:10px 10px;">
+                  <a t-attf-href="/rate/{{ access_token }}/7" style="text-decoration: none; box-sizing: border-box; color: #495057;">
+                    <img alt="7/10" src="/project_rating_nps/static/src/img/rate_7.png" style="box-sizing: border-box; vertical-align: middle; width: 32px; height: 32px;" width="32" height="32">
+                  </a>
+                </td>
+                <td style="border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;padding:10px 10px;">
+                  <a t-attf-href="/rate/{{ access_token }}/8" style="text-decoration: none; box-sizing: border-box; color: #495057;">
+                    <img alt="8/10" src="/project_rating_nps/static/src/img/rate_8.png" style="box-sizing: border-box; vertical-align: middle; width: 32px; height: 32px;" width="32" height="32">
+                  </a>
+                </td>
+                <td style="border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;padding:10px 10px;">
+                  <a t-attf-href="/rate/{{ access_token }}/9" style="text-decoration: none; box-sizing: border-box; color: #495057;">
+                    <img alt="9/10" src="/project_rating_nps/static/src/img/rate_9.png" style="box-sizing: border-box; vertical-align: middle; width: 32px; height: 32px;" width="32" height="32">
+                  </a>
+                </td>
+                <td style="border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;padding:10px 10px;">
+                  <a t-attf-href="/rate/{{ access_token }}/10" style="text-decoration: none; box-sizing: border-box; color: #495057;">
+                    <img alt="10/10" src="/project_rating_nps/static/src/img/rate_10.png" style="box-sizing: border-box; vertical-align: middle; width: 32px; height: 32px;" width="32" height="32">
+                  </a>
+                </td>
+              </tr>
+            </tbody></table>
+          </td></tr>
+        </tbody></table>
+      </td></tr>
+      <tr style="border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;"><td valign="top" style="border-style:none;box-sizing:border-box;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;font-size: 13px;"><t t-if="object.project_id.rating_status == 'stage'">
+Wir danken Ihnen für Ihr Feedback. Es hilft uns, uns kontinuierlich zu verbessern.
+
+<br></t></td></tr>
+    </tbody>
+  </table>
+</div>
+      

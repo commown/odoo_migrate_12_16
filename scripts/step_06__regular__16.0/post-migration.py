@@ -64,13 +64,17 @@ base_nps_tmpl.reset_template()
 
 # Ticket #43785
 dupl_nps_tmpl = env['mail.template'].search([("name", "like", "[Commown] NPS")])
-dupl_nps_tmpl.write({
+dupl_nps_tmpl.with_context(lang='en_US').write({
     "body_html": base_nps_tmpl.body_html,
     "partner_to": base_nps_tmpl.partner_to,
     "lang": base_nps_tmpl.lang,
 })
-copy_t10n_to_t10n(dupl_nps_tmpl, "body_html", "fr_FR", "de_DE")
-copy_t10n_to_t10n(dupl_nps_tmpl, "body_html", "fr_FR", "en_US")
+
+with open("/env/scripts/step_06__regular__16.0/fr_FR_commown_nps.xml", "r") as f_fr:
+    dupl_nps_tmpl.with_context(lang='fr_FR').body_html = f_fr.read()
+
+with open("/env/scripts/step_06__regular__16.0/de_DE_commown_nps.xml", "r") as f_de:
+    dupl_nps_tmpl.with_context(lang='de_DE').body_html = f_de.read()
 
 # Ticket #44730
 label_group = env.ref("commown_shipping.group_print_label")
