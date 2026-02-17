@@ -302,6 +302,50 @@ env["account.statement.import.sheet.mapping"].search([("name", "=", "La Nef")]).
     }
 )
 
+# Ticket #44782
+journal = env["account.journal"].create({"name": "Amortissements", "code": "AMOR", "type": "general"})
+env["account.asset.profile"].search([]).journal_id = journal.id
+
+# Only fetch account moves from the current fiscal year
+affected_asset_lines = env["account.asset.line"].search([("move_id.date", ">", "2025-08-31"), ("move_id.move_type", "=", "entry")])
+affected_moves = affected_asset_lines.mapped("move_id")
+
+# Assign the newly created journal to the existing asset depreciations move and move lines
+query = """
+    UPDATE account_move
+    SET 
+        journal_id = 
+            CASE
+                WHEN journal_id IN (2, 3, %(journal_id)s) THEN %(journal_id)s
+                ELSE NULL
+            END,
+        name = '/'
+    WHERE id IN %%s
+""" % {"journal_id": journal.id}
+env.cr.execute(query, [tuple(affected_moves.ids)])
+
+query = """
+    UPDATE account_move_line
+    SET 
+        journal_id = 
+            CASE
+                WHEN journal_id IN (2, 3, %(journal_id)s) THEN %(journal_id)s
+                ELSE journal_id
+            END,
+        name = '/'
+    WHERE move_id IN %%s
+""" % {"journal_id": journal.id}
+env.cr.execute(query, [tuple(affected_moves.ids)])
+
+affected_moves._compute_name()
+
+# Re-assign ref values, with the main asset name
+seen_moves_ids = set()
+for aal in affected_asset_lines:
+    if aal.move_id not in seen_moves_ids:
+        aal.move_id.ref = "{} - {}".format(aal.asset_id.name, aal.name)
+        seen_moves_ids.add(aal.move_id)
+
 env.cr.commit()
 
 # Uninstall unported modules
