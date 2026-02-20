@@ -335,8 +335,7 @@ query = """
             CASE
                 WHEN journal_id IN (2, 3, %(journal_id)s) THEN %(journal_id)s
                 ELSE journal_id
-            END,
-        name = '/'
+            END
     WHERE move_id IN %%s
 """ % {"journal_id": journal.id}
 env.cr.execute(query, [tuple(affected_moves.ids)])
