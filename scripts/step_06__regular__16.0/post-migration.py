@@ -1,5 +1,6 @@
 from openupgradelib import openupgrade
 import logging
+import re
 
 _logger = logging.getLogger(__name__)
 _logger.info("Executing post-migration.py script ...")
@@ -306,13 +307,17 @@ env["account.statement.import.sheet.mapping"].search([("name", "=", "La Nef")]).
     }
 )
 
-# Ticket #44782
+# Ticket #44782/#47967
 journal = env["account.journal"].create({"name": "Amortissements", "code": "AMOR", "type": "general"})
 env["account.asset.profile"].search([]).journal_id = journal.id
 
 # Only fetch account moves from the current fiscal year
 affected_asset_lines = env["account.asset.line"].search([("move_id.date", ">", "2025-08-31"), ("move_id.move_type", "=", "entry")])
 affected_moves = affected_asset_lines.mapped("move_id")
+
+# Fetch account moves from previous fiscal years
+locked_affected_asset_lines = env["account.asset.line"].search([("move_id.date", "<=", "2025-08-31"), ("move_id.move_type", "=", "entry")])
+locked_affected_moves = locked_affected_asset_lines.mapped("move_id")
 
 # Assign the newly created journal to the existing asset depreciations move and move lines
 query = """
@@ -326,7 +331,7 @@ query = """
         name = '/'
     WHERE id IN %%s
 """ % {"journal_id": journal.id}
-env.cr.execute(query, [tuple(affected_moves.ids)])
+env.cr.execute(query, [tuple(affected_moves.ids + locked_affected_moves.ids)])
 
 query = """
     UPDATE account_move_line
@@ -338,7 +343,7 @@ query = """
             END
     WHERE move_id IN %%s
 """ % {"journal_id": journal.id}
-env.cr.execute(query, [tuple(affected_moves.ids)])
+env.cr.execute(query, [tuple(affected_moves.ids + locked_affected_moves.ids)])
 
 affected_moves._compute_name()
 
@@ -348,6 +353,48 @@ for aal in affected_asset_lines:
     if aal.move_id not in seen_moves_ids:
         aal.move_id.ref = "{} - {}".format(aal.asset_id.name, aal.name)
         seen_moves_ids.add(aal.move_id)
+
+# Modifying locked account.move related to assets
+locked_moves_groups = env["account.move"].read_group([("id", "in", locked_affected_moves.ids)], ["date"], ["date:month"])
+
+query = """
+    UPDATE
+        account_move AS am
+    SET
+        name = %(name)s,
+        sequence_number = %(seq_num)s,
+        sequence_prefix = %(seq_prefix)s,
+        ref = %(ref)s
+    WHERE
+        am.id = %(move_id)s;
+"""
+
+for group in locked_moves_groups:
+    group_moves = env['account.move'].search(group["__domain"]).sorted(lambda m: (m.date, m.ref or '', m.id))
+
+    # (based on _set_sequence_number)
+    sequence = group_moves[0]._get_starting_sequence()
+    format, format_values = group_moves[0]._get_sequence_format_param(sequence)
+
+    # Get prefix for current month (based on _compute_split_sequence)
+    regex = re.sub(r"\?P<\w+>", "?:", group_moves[0]._sequence_fixed_regex.replace(r"?P<seq>", ""))
+    matching = re.match(regex, sequence)
+    seq_prefix = sequence[:matching.start(1)]
+ 
+    for locked_move in group_moves:
+        format_values["seq"] = format_values['seq'] + 1
+        aal = env["account.asset.line"].search([("move_id", "=", locked_move.id)], limit=1)
+
+        env.cr.execute(
+            query, 
+            {
+                "name": format.format(**format_values),
+                "seq_num": format_values["seq"],
+                "seq_prefix": seq_prefix,
+                "ref": f'{aal.asset_id.name} - {aal.name}',
+                "move_id": locked_move.id,
+            },
+        )
 
 env.cr.commit()
 
