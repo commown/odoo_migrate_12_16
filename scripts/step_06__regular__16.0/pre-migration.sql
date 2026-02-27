@@ -28,3 +28,14 @@ delete from mail_template where name->>'en_US'='Warn partner of a payment issue'
 -- Ticket #44699/#
 UPDATE account_account SET code = REPLACE(code, '-', '.') WHERE code LIKE '%-%';
 
+-- Ticket #47938/#
+UPDATE 
+	utm_source AS us 
+SET 
+	name = it.value
+FROM 
+	ir_translation it 
+WHERE
+	it.name = 'utm.source,name' AND
+	it.res_id = us.id AND
+	it.lang = 'fr_FR';
