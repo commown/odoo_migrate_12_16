@@ -1,3 +1,4 @@
+from openupgradelib import openupgrade
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -13,5 +14,16 @@ for pt in env['product.template'].search([("website_description", "!=", False)])
 
 # Ticket #45719
 env.ref("sales_team.salesteam_website_sales").use_opportunities = True
+
+# Ticket #48394
+openupgrade.logged_query(
+  env.cr,
+  """
+  UPDATE account_move_line aml
+  SET account_root_id = aa.root_id
+  FROM account_account aa
+  WHERE aml.account_root_id IS NULL AND aa.id = aml.account_id
+  """
+)
 
 env.cr.commit()
