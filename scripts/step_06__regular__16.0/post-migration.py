@@ -396,8 +396,131 @@ for group in locked_moves_groups:
             },
         )
 
+# Ticket #47897
+# Rebalance customer move lines, to avoid a fiscal lock date Exception when accessing them from the portal,
+# and to delete the grouped lines which remained on the account.move
+# (Based on account.move:_sync_invoice)
+env.cr.execute(
+    """
+    WITH INV_SIGN AS(
+    SELECT
+        id,
+        (CASE
+            WHEN am.move_type = 'out_refund' THEN 1
+            ELSE -1
+        END) AS direction_sign
+    FROM
+        account_move am
+    WHERE
+        EXISTS (SELECT 1 FROM account_move_line aml WHERE name LIKE '%(OLD GROUPED ITEM)%' AND am.id = aml.move_id) AND
+        move_type in ('out_invoice', 'out_refund') AND
+        id NOT IN (34334, 304850, 304851, 274745)
+)
+    SELECT
+        aml1.id AS aml_id,
+        COALESCE(aml1.amount_currency, 0.0) AS current_amount,
+        COALESCE(aml1.price_subtotal, 0.0) * INV_SIGN.direction_sign AS computed_amount
+    INTO tmp_aml_amount_data
+    FROM
+        account_move_line aml1
+        JOIN INV_SIGN ON aml1.move_id = INV_SIGN.id
+    WHERE aml1.display_type = 'product'
+    """
+)
+openupgrade.logged_query(
+    env.cr,
+    """
+    UPDATE
+        account_move_line AS aml
+    SET
+        amount_currency = tmp_aml_amount_data.computed_amount,
+        balance = tmp_aml_amount_data.computed_amount,
+        debit = CASE WHEN tmp_aml_amount_data.computed_amount > 0.0 THEN tmp_aml_amount_data.computed_amount ELSE 0.0 END,
+        credit = CASE WHEN tmp_aml_amount_data.computed_amount < 0.0 THEN - tmp_aml_amount_data.computed_amount ELSE 0.0 END
+    FROM
+        tmp_aml_amount_data
+    WHERE
+        tmp_aml_amount_data.aml_id = aml.id
+        AND tmp_aml_amount_data.current_amount != tmp_aml_amount_data.computed_amount
+    """
+)
+
+# Assign date_maturity from the old grouped lines to the lines ported from account.invoice.line
+env.cr.execute(
+    """
+    SELECT
+        aml.move_id, aml.product_id, aml.date_maturity
+    INTO tmp_move_date_data
+    FROM account_move_line aml JOIN account_move am ON aml.move_id = am.id
+    WHERE
+        aml.name LIKE '%(OLD GROUPED ITEM)%'
+        AND am.move_type IN ('out_invoice', 'out_refund')
+    """
+)
+openupgrade.logged_query(
+    env.cr,
+    """
+    UPDATE account_move_line AS aml_non_grouped
+    SET
+        date_maturity = tmp_move_date_data.date_maturity
+    FROM
+        tmp_move_date_data
+    WHERE
+        aml_non_grouped.date_maturity IS NULL
+        AND aml_non_grouped.move_id = tmp_move_date_data.move_id
+        AND aml_non_grouped.product_id = tmp_move_date_data.product_id;
+    """
+)
+
+# Remove the OLD GROUPED line from customer moves with a null balance
+openupgrade.logged_query(
+    env.cr,
+    """
+    DELETE FROM account_move_line aml_del
+    WHERE
+        aml_del.id in (
+            SELECT aml.id
+            FROM
+                account_move_line aml
+                JOIN account_move am ON am.id = aml.move_id
+            WHERE
+                aml.name LIKE '%(OLD GROUPED ITEM)%'
+                AND aml.balance = 0.0
+                AND am.move_type in ('out_invoice', 'out_refund')
+            )
+    """
+)
+
 env.cr.commit()
 
 # Uninstall unported modules
 unported_modules = env['ir.module.module'].search([('name', 'in', ['account_invoice_view_payment', 'commown_lineageos', 'crm_phone', 'mass_operation_abstract'])])
 unported_modules.button_immediate_uninstall()
+
+# DEBUG: Ticket #47897
+# Check unbalanced moves after rebalancing in pre-migration
+env.cr.execute(
+    '''
+    SELECT line.move_id,
+        ROUND(SUM(line.debit), currency.decimal_places) debit,
+        ROUND(SUM(line.credit), currency.decimal_places) credit
+    FROM account_move_line line
+        JOIN account_move move ON move.id = line.move_id
+        JOIN res_company company ON company.id = move.company_id
+        JOIN res_currency currency ON currency.id = company.currency_id
+    WHERE line.move_id IN (
+        SELECT
+            DISTINCT move_id
+        FROM
+            account_move_line
+        WHERE
+            old_invoice_line_id IS NOT NULL
+        )
+    GROUP BY line.move_id, currency.decimal_places
+    HAVING ROUND(SUM(line.balance), currency.decimal_places) != 0
+    '''
+)
+unbalanced_moves = env.cr.fetchall()
+if unbalanced_moves:
+    _logger.warning("!!!! Unbalanced moves found :\n%s", unbalanced_moves)
+
