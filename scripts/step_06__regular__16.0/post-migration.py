@@ -497,6 +497,10 @@ env.cr.commit()
 unported_modules = env['ir.module.module'].search([('name', 'in', ['account_invoice_view_payment', 'commown_lineageos', 'crm_phone', 'mass_operation_abstract'])])
 unported_modules.button_immediate_uninstall()
 
+# Ticket #48347
+# Install module to generate new move names from sequences
+env['ir.module.module'].search([("name", "=", "account_move_name_sequence")]).button_immediate_install()
+
 # DEBUG: Ticket #47897
 # Check unbalanced moves after rebalancing in pre-migration
 env.cr.execute(
