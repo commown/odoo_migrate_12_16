@@ -309,7 +309,7 @@ env["account.statement.import.sheet.mapping"].search([("name", "=", "La Nef")]).
 
 # Ticket #44782/#47967
 journal = env["account.journal"].create({"name": "Amortissements", "code": "AMOR", "type": "general"})
-env["account.asset.profile"].search([]).journal_id = journal.id
+env["account.asset.profile"].with_context(active_test=False).search([]).journal_id = journal.id
 
 # Only fetch account moves from the current fiscal year
 affected_asset_lines = env["account.asset.line"].search([("move_id.date", ">", "2025-08-31"), ("move_id.move_type", "=", "entry")])
