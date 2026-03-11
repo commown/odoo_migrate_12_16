@@ -397,6 +397,27 @@ for group in locked_moves_groups:
         )
 
 # Ticket #47897
+# Mark grouped lines with different partners from the invoice lines as such(ie. B2B employees and their companies)
+openupgrade.logged_query(
+    env.cr,
+    """
+    UPDATE account_move_line aml
+    SET
+        name = '(OLD GROUPED ITEM)' || aml.name
+    FROM account_invoice_line ail
+        JOIN account_invoice ai ON ail.invoice_id = ai.id AND ai.state NOT IN ('draft', 'cancel')
+        JOIN account_move am ON ail.invoice_id = am.old_invoice_id
+    WHERE am.id = aml.move_id AND ail.company_id = aml.company_id AND ail.account_id = aml.account_id
+        AND ail.partner_id != aml.partner_id
+        AND ((ail.product_id IS NULL AND aml.product_id IS NULL) OR ail.product_id = aml.product_id)
+        AND ((ail.uom_id IS NULL AND aml.product_uom_id IS NULL) OR ail.uom_id = aml.product_uom_id)
+        AND ((ail.account_analytic_id IS NULL AND aml.analytic_account_id IS NULL)
+            OR ail.account_analytic_id = aml.analytic_account_id)
+        AND aml.tax_line_id IS NULL
+        AND aml.old_invoice_line_id IS NULL
+    """,
+)
+
 # Rebalance customer move lines, to avoid a fiscal lock date Exception when accessing them from the portal,
 # and to delete the grouped lines which remained on the account.move
 # (Based on account.move:_sync_invoice)
