@@ -512,6 +512,9 @@ openupgrade.logged_query(
     """
 )
 
+env.cr.execute("DROP TABLE IF EXISTS tmp_aml_amount_data")
+env.cr.execute("DROP TABLE IF EXISTS tmp_move_date_data")
+
 env.cr.commit()
 
 # Uninstall unported modules
