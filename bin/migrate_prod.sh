@@ -295,18 +295,18 @@ restore_odoo_v16()
   date
 }
 
-#prereqs || err "Missing prerequisites"
-#restore || err "Restore failed"
-#make_safe || err "Making the DB safe failed"
-#rm_website_sale_coupon
-#rm_pt_files
+prereqs || err "Missing prerequisites"
+restore || err "Restore failed"
+make_safe || err "Making the DB safe failed"
+rm_website_sale_coupon
+rm_pt_files
 rm -f "$CURRENT_DIR/mt-smspro_payment_issue-body_current.txt"
-#migrate_0_2 || err "Migrate step 0-2 failed"
-#migrate_3 || err "Migrate step 3 failed"
-#migrate_4 || err "Migrate step 4 failed"
-#migrate_5 || err "Migrate step 5 failed"
-#migrate_6 || err "Migrate step 6 failed"
-#dump
+migrate_0_2 || err "Migrate step 0-2 failed"
+migrate_3 || err "Migrate step 3 failed"
+migrate_4 || err "Migrate step 4 failed"
+migrate_5 || err "Migrate step 5 failed"
+migrate_6 || err "Migrate step 6 failed"
+dump
 restore_odoo_v16
 
 diff "$CURRENT_DIR/mt-smspro_payment_issue-body_current.txt" "$CURRENT_DIR/mt-smspro_payment_issue-body.txt" > /dev/null || echo "ATTENTION: Le modèle de SMS d'impayé Slimpay a changé"
