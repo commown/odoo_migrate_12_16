@@ -281,17 +281,16 @@ restore_odoo_v16()
 
   date
   echo "Moving migrated filestore in Odoo data directories..."
-  docker exec odoo-v16 mkdir -p /var/lib/odoo/.local/share/Odoo/filestore/
-  docker exec odoo-v16 tar -C /var/lib/odoo/.local/share/Odoo/filestore/ -xf /tmp/odoo_backups/filestore-16.tar || err "Unarchiving filestore failed"
-  docker exec odoo-v16 rm -r /var/lib/odoo/.local/share/Odoo/filestore/odoo_commown
-  docker exec odoo-v16 mv /var/lib/odoo/.local/share/Odoo/filestore/filestore /var/lib/odoo/.local/share/Odoo/filestore/odoo_commown
-  docker exec odoo-v16 chown -R odoo:odoo /var/lib/odoo/.local/share/Odoo/filestore/
+  mkdir -p /var/lib/odoo/.local/share/Odoo/filestore/
+  rm -rf /var/lib/odoo/.local/share/Odoo/filestore/odoo_commown
+  mv /root/odoo_migrate_12_16/filestore/filestore/odoo_commown/ /var/lib/odoo/.local/share/Odoo/filestore/odoo_commown
+  chown -R odoo:odoo /var/lib/odoo/.local/share/Odoo/filestore/
 
   date
   echo "Recreating odoo_commown PSQL DB with migrated DB..."
-  docker exec --user postgres odoo-v16 dropdb --if-exists odoo_commown
-  docker exec --user postgres odoo-v16 createdb -O odoo odoo_commown
-  docker exec --user postgres odoo-v16 pg_restore -C -d odoo_commown /tmp/odoo_backups/odoo-commown-16.tar
+  su postgres sh -c "cd /tmp ; dropdb --if-exists odoo_commown"
+  su postgres sh -c "cd /tmp ; createdb -O odoo odoo_commown"
+  su postgres sh -c "cd /tmp ; pg_restore -C -d odoo_commown /data/odoo-commown-16.tar"
 
   date
 }
