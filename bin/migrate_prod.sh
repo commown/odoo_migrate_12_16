@@ -185,7 +185,7 @@ migrate_0_2()
   date
   echo "Saving before starting the migration..."
 
-  oow copydb -s odoo_commown -d odoo_commown-step-0 > /dev/null 2>&1 || exit 1
+  #oow copydb -s odoo_commown -d odoo_commown-step-0 > /dev/null 2>&1 || exit 1
 
   # STEP 1 and 2 (step 1 is very short)
 
@@ -193,7 +193,7 @@ migrate_0_2()
   echo "Migration: steps 1 and 2 (duration ~9h)..."
 
   oow upgrade --first-step 1 --last-step 2 -d odoo_commown > /dev/null 2>&1 || exit 1
-  oow copydb -s odoo_commown -d odoo_commown-step-2  > /dev/null 2>&1 || exit 1
+  #oow copydb -s odoo_commown -d odoo_commown-step-2  > /dev/null 2>&1 || exit 1
 
   #oow dropdb -d odoo_commown-step-0 > /dev/null 2>&1 || exit 1
 }
@@ -206,7 +206,7 @@ migrate_3()
   echo "Migration: step 3 (duration ~7h on hirondelle)..."
 
   oow upgrade --first-step 3 --last-step 3 -d odoo_commown > /dev/null 2>&1 || exit 1
-  oow copydb -s odoo_commown -d odoo_commown-step-3  > /dev/null 2>&1 || exit 1
+  #oow copydb -s odoo_commown -d odoo_commown-step-3  > /dev/null 2>&1 || exit 1
 
   #oow dropdb -d odoo_commown-step-2 > /dev/null 2>&1 || exit 1
 }
@@ -219,7 +219,7 @@ migrate_4()
   echo "Migration: step 4..."
 
   oow upgrade --first-step 4 --last-step 4 -d odoo_commown > /dev/null 2>&1 || exit 1
-  oow copydb -s odoo_commown -d odoo_commown-step-4  > /dev/null 2>&1 || exit 1
+  #oow copydb -s odoo_commown -d odoo_commown-step-4  > /dev/null 2>&1 || exit 1
 
   #oow dropdb -d odoo_commown-step-3 > /dev/null 2>&1 || exit 1
 
@@ -234,7 +234,7 @@ migrate_5()
   echo "Migration: step 5..."
 
   oow upgrade --first-step 5 --last-step 5 -d odoo_commown > /dev/null 2>&1 || exit 1
-  oow copydb -s odoo_commown -d odoo_commown-step-5  > /dev/null 2>&1 || exit 1
+  #oow copydb -s odoo_commown -d odoo_commown-step-5  > /dev/null 2>&1 || exit 1
 
   #oow dropdb -d odoo_commown-step-4 > /dev/null 2>&1 || exit 1
 
