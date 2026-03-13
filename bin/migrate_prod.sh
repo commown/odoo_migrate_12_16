@@ -264,12 +264,14 @@ dump()
   echo "Dumping the DB and filestore..."
 
   oow dumpdb -d odoo_commown \
+      --force \
       --database-path odoo-commown-16.tar \
       --database-format t \
       --filestore-path filestore-16.tar \
       --filestore-format t > /dev/null 2>&1
 
-  mv filestore-16.tar odoo-commown-16.tar /data/odoo_backups/
+  mkdir -p /data
+  mv -f odoo-commown-16.tar /data
   date
   echo "Done!"
 }
