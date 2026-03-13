@@ -278,15 +278,6 @@ dump()
 
 restore_odoo_v16()
 {
-  echo "Start Odoo site maintenance..."
-  mv /var/www/odoo-v16.commown.priv/maintenance.html.rename_me /var/www/odoo-v16.commown.priv/maintenance.html
-  mv /var/www/pro-v16.commown.priv/maintenance.html.rename_me /var/www/pro-v16.commown.priv/maintenance.html
-
-  echo "Restoring the migrated DB + filestore into Odoo v16 test instance..."
-  docker restart odoo-v16
-
-  sleep 60
-  docker exec odoo-v16 systemctl stop odoo
 
   date
   echo "Moving migrated filestore in Odoo data directories..."
@@ -303,12 +294,6 @@ restore_odoo_v16()
   docker exec --user postgres odoo-v16 pg_restore -C -d odoo_commown /tmp/odoo_backups/odoo-commown-16.tar
 
   date
-  echo "Restore DONE!"
-  docker exec odoo-v16 systemctl restart odoo
-
-  echo "Stop Odoo site maintenance..."
-  mv /var/www/odoo-v16.commown.priv/maintenance.html /var/www/odoo-v16.commown.priv/maintenance.html.rename_me
-  mv /var/www/pro-v16.commown.priv/maintenance.html /var/www/pro-v16.commown.priv/maintenance.html.rename_me
 }
 
 #prereqs || err "Missing prerequisites"
