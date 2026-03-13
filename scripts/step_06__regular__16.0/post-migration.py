@@ -515,6 +515,51 @@ openupgrade.logged_query(
 env.cr.execute("DROP TABLE IF EXISTS tmp_aml_amount_data")
 env.cr.execute("DROP TABLE IF EXISTS tmp_move_date_data")
 
+# Ticket 47897
+# Unshuffling move lines resulting from incorrect invoice line matching in the invoice merging process,
+# since the same products were assigned to several lines, leading to mismatched balances to each invoice line.
+def unshuffle_invoice_lines(*mv_ids):
+    for mv_id in mv_ids:
+        mv = env["account.move"].browse(mv_id)
+
+        credit_debit_query = f"""
+            SELECT
+                ROUND(SUM(aml.debit), 2), ROUND(SUM(aml.credit), 2), ROUND(SUM(aml.balance), 2), aml.account_id
+            FROM
+                account_move_line aml
+            WHERE aml.move_id = {mv_id}
+            GROUP BY 4
+            ORDER BY 4
+        """
+        env.cr.execute(credit_debit_query)
+        res_before = env.cr.fetchall()
+        credit_or_debit = "debit" if mv.direction_sign > 0 else "credit"
+        update_query = f"""
+            UPDATE
+                account_move_line aml
+            SET
+                amount_currency = {mv.direction_sign} * aml.price_subtotal,
+                balance = {mv.direction_sign} * aml.price_subtotal,
+                {credit_or_debit} = aml.price_subtotal
+            FROM
+                account_move am
+            WHERE
+                am.id = {mv_id}
+                AND aml.move_id = am.id
+                AND aml.display_type = 'product'
+                AND - ROUND(aml.price_subtotal, 2) != ROUND(aml.amount_currency, 2)
+        """
+        env.cr.execute(update_query)
+
+        env.cr.execute(credit_debit_query)
+        res_after = env.cr.fetchall()
+        if res_before != res_after:
+            _logger.warning(f"!!! Unshuffling incorrect for move {mv_id}")
+        else:
+            _logger.info(f"Shuffling seems ok for move {mv_id}!!")
+
+unshuffle_invoice_lines(80033, 91157, 97261, 109740, 166496, 168487)
+
 env.cr.commit()
 
 # Uninstall unported modules
